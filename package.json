@@ -1,0 +1,35 @@
+{
+  "name": "uklog",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "dev": "next dev",
+    "preview": "next build && next start",
+    "build": "next build",
+    "start": "next start",
+    "lint": "next lint"
+  },
+  "dependencies": {
+    "@stylexjs/stylex": "^0.4.1",
+    "crypto": "^1.0.1",
+    "jose": "^5.2.0",
+    "mongoose": "^8.1.1",
+    "next": "14.0.4",
+    "react": "^18",
+    "react-cookie": "^7.0.2",
+    "react-dom": "^18"
+  },
+  "devDependencies": {
+    "@stylexjs/babel-plugin": "^0.4.1",
+    "@stylexjs/eslint-plugin": "^0.4.1",
+    "@stylexjs/nextjs-plugin": "^0.4.1",
+    "@types/jsonwebtoken": "^9.0.5",
+    "@types/node": "^20",
+    "@types/react": "^18",
+    "@types/react-dom": "^18",
+    "eslint": "^8",
+    "eslint-config-next": "14.0.4",
+    "prettier": "^3.2.4",
+    "typescript": "^5"
+  }
+}
