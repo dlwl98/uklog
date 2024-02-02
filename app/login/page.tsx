@@ -11,12 +11,12 @@ async function handleSubmit(formData: FormData) {
     if (verifyPassword(password)) {
       const token = await new SignJWT({ user: 'admin' })
         .setProtectedHeader({ alg: 'HS256' })
-        .setExpirationTime('1h')
+        .setExpirationTime('72h')
         .sign(new TextEncoder().encode(process.env.JWT_SECRET!));
 
       cookies().set('token', token, {
         httpOnly: true,
-        expires: Date.now() + 1000 * 60 * 60,
+        expires: Date.now() + 1000 * 60 * 60 * 24 * 3,
       });
 
       redirect('/');
