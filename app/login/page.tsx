@@ -15,7 +15,7 @@ async function handleSubmit(formData: FormData) {
         .sign(new TextEncoder().encode(process.env.JWT_SECRET!));
 
       cookies().set('token', token, {
-        // httpOnly: true,
+        httpOnly: true,
         expires: Date.now() + 1000 * 60 * 60,
       });
 
