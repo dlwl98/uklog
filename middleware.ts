@@ -13,7 +13,9 @@ export async function middleware(request: NextRequest) {
   const response = NextResponse.next();
   try {
     await jwtVerify(token, new TextEncoder().encode(process.env.JWT_SECRET!));
-    response.cookies.set('loggedIn', 'true').set('token', token);
+    response.cookies
+      .set('loggedIn', 'true')
+      .set('token', token, { httpOnly: true });
   } catch (error) {
     response.cookies.set('loggedIn', 'false');
   } finally {
