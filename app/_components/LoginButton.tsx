@@ -2,22 +2,19 @@
 
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
-import { useCallback, useEffect, useState } from 'react';
+import { useCallback } from 'react';
 import { useCookies } from 'react-cookie';
+import useLoggedIn from '../_hooks/useLoggedIn';
 
 export function LoginButton() {
-  const [cookies, , removeCookies] = useCookies(['loggedIn', 'token']);
-  const [loggedIn, setLoggedIn] = useState(false);
+  const [, , removeCookies] = useCookies(['token']);
+  const loggedIn = useLoggedIn();
   const router = useRouter();
 
   const logout = useCallback(() => {
     removeCookies('token');
     router.refresh();
   }, [removeCookies, router]);
-
-  useEffect(() => {
-    setLoggedIn(cookies.loggedIn === true);
-  }, [cookies]);
 
   if (loggedIn) {
     return (
