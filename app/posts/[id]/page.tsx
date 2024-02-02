@@ -1,6 +1,7 @@
 import { PostsService } from '@/app/_lib/posts/Posts.service';
 import Link from 'next/link';
 import LikeButton from './LikeButton';
+import AdminButtons from './AdminButtons';
 
 export default async function Page({ params }: { params: { id: string } }) {
   const post = await PostsService.getPostById(params.id);
@@ -21,6 +22,7 @@ export default async function Page({ params }: { params: { id: string } }) {
       <LikeButton likes={likes} postId={post._id.toString()} />
       <div>{new Date(createdAt).toLocaleString()}</div>
       <div>{new Date().toLocaleString()}</div>
+      <AdminButtons />
     </div>
   );
 }
