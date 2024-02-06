@@ -12,7 +12,7 @@ export default function AdminButtons() {
 
   const deletePost = useCallback(() => {
     if (confirm('삭제합니까?')) {
-      fetch(`/api/${pathname}`, { method: 'DELETE' }).then(() => {
+      fetch(`/api${pathname}`, { method: 'DELETE' }).then(() => {
         router.replace('/');
       });
     }
