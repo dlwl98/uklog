@@ -1,4 +1,5 @@
 import { PostsService } from '@/app/_lib/posts/Posts.service';
+import { revalidatePath } from 'next/cache';
 
 export async function GET(
   req: Request,
@@ -13,6 +14,23 @@ export async function GET(
       {
         status: 500,
       },
+    );
+  }
+}
+
+export async function DELETE(
+  req: Request,
+  { params }: { params: { id: string } },
+) {
+  try {
+    const deletedPost = await PostsService.deletePost(params.id);
+    revalidatePath('/');
+
+    return Response.json(deletedPost);
+  } catch (error) {
+    return new Response(
+      JSON.stringify({ error, message: 'posts DELETE error' }),
+      { status: 500 },
     );
   }
 }

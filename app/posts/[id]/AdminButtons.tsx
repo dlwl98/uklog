@@ -2,16 +2,21 @@
 
 import useLoggedIn from '@/app/_hooks/useLoggedIn';
 import Link from 'next/link';
-import { usePathname } from 'next/navigation';
+import { usePathname, useRouter } from 'next/navigation';
 import { useCallback } from 'react';
 
 export default function AdminButtons() {
   const loggedIn = useLoggedIn();
   const pathname = usePathname();
+  const router = useRouter();
 
   const deletePost = useCallback(() => {
-    console.log('아직 구현중');
-  }, []);
+    if (confirm('삭제합니까?')) {
+      fetch(`/api/${pathname}`, { method: 'DELETE' }).then(() => {
+        router.replace('/');
+      });
+    }
+  }, [router, pathname]);
 
   if (!loggedIn) {
     return <></>;

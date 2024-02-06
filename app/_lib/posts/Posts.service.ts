@@ -19,6 +19,11 @@ export class PostsService {
     return Post.create({ title, content, tags });
   }
 
+  static async deletePost(id: string) {
+    await connectDB();
+    return Post.findByIdAndDelete(id);
+  }
+
   static async updatePost(id: string, { title, content, tags }: UpdatePostDto) {
     await connectDB();
 
