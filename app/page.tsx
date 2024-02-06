@@ -1,7 +1,7 @@
-// import stylex from '@stylexjs/stylex';
-import { LoginButton } from './_components/LoginButton';
+import stylex from '@stylexjs/stylex';
 import { PostsService } from './_lib/posts/Posts.service';
 import Link from 'next/link';
+import { flex } from './global.stylex';
 
 export const revalidate = 30;
 
@@ -9,32 +9,43 @@ export default async function Page() {
   const posts = await PostsService.getPosts();
 
   return (
-    <main>
-      <div>
-        <h1>uklog</h1>
-        <LoginButton />
-        {posts.map(({ _id, title, content, createdAt, likes }) => (
-          <Link
-            key={_id.toString()}
-            href={`/posts/${_id}`}
-            style={{ margin: '5px' }}
-          >
-            <h3>{title}</h3>
-            <div>{content}</div>
-            <div>likes: {likes.length}</div>
-            <div>{new Date(createdAt).toLocaleString()}</div>
+    <>
+      <div {...stylex.props(flex.column, styles.layout)}>
+        {posts.map(({ _id, title, createdAt }) => (
+          <Link key={_id.toString()} href={`/posts/${_id}`}>
+            <div {...stylex.props(flex.column, styles.post)}>
+              <h2>{title}</h2>
+              <div {...stylex.props(styles.createdAt)}>
+                {new Date(createdAt).toISOString().slice(0, 10)}
+              </div>
+            </div>
           </Link>
         ))}
       </div>
-      <div>{new Date().toLocaleString()}</div>
-    </main>
+    </>
   );
 }
 
-// const styles = stylex.create({
-//   page: {},
-//   post: {
-//     backgroundColor: 'lightblue',
-//     margin: '5px',
-//   },
-// });
+const styles = stylex.create({
+  layout: {
+    gap: '10px',
+    margin: '10px',
+  },
+  post: {
+    gap: '10px',
+    width: '100%',
+    paddingLeft: '10px',
+    paddingRight: '10px',
+    paddingTop: '15px',
+    paddingBottom: '15px',
+    borderRadius: '8px',
+    backgroundColor: {
+      default: 'inherit',
+      ':hover': 'lightgray',
+    },
+  },
+  createdAt: {
+    fontWeight: 300,
+    fontSize: '0.8rem',
+  },
+});
