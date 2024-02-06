@@ -3,18 +3,17 @@
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import { useCallback } from 'react';
-import { useCookies } from 'react-cookie';
 import useLoggedIn from '../_hooks/useLoggedIn';
 
 export function LoginButton() {
-  const [, , removeCookies] = useCookies(['token']);
   const loggedIn = useLoggedIn();
   const router = useRouter();
 
   const logout = useCallback(() => {
-    removeCookies('token');
-    router.refresh();
-  }, [removeCookies, router]);
+    fetch('/api/logout', { method: 'POST' }).then(() => {
+      router.refresh();
+    });
+  }, [router]);
 
   if (loggedIn) {
     return (
