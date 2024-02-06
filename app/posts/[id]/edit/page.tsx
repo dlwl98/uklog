@@ -1,6 +1,5 @@
 import { PostsService } from '@/app/_lib/posts/Posts.service';
 import { revalidatePath } from 'next/cache';
-import { cookies } from 'next/headers';
 import Link from 'next/link';
 import { redirect } from 'next/navigation';
 
@@ -17,9 +16,6 @@ async function handleSubmit(formData: FormData) {
 }
 
 export default async function Page({ params }: { params: { id: string } }) {
-  if (cookies().get('loggedIn')?.value !== 'true') {
-    redirect('/login');
-  }
   const post = await PostsService.getPostById(params.id);
   if (!post) {
     throw new Error(`cannot find post id: ${params.id}`);
