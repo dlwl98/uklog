@@ -30,6 +30,7 @@ const styles = stylex.create({
   layout: {
     gap: '10px',
     margin: '10px',
+    flexDirection: 'column-reverse',
   },
   post: {
     gap: '10px',
