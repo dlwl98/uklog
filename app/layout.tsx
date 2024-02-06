@@ -40,13 +40,16 @@ const styles = stylex.create({
     padding: 0,
   },
   body: {
-    maxWidth: '1000px',
     minWidth: '300px',
+    maxWidth: '1000px',
     minHeight: '100vh',
     margin: 'auto',
+    marginTop: '60px',
     fontSize: '1rem',
   },
   header: {
+    minWidth: '300px',
+    maxWidth: '1000px',
     width: '100%',
     height: '60px',
     paddingLeft: '20px',
@@ -56,6 +59,9 @@ const styles = stylex.create({
     borderBottomStyle: 'solid',
     borderBottomColor: 'lightgray',
     borderBottomWidth: '1px',
+    backgroundColor: 'white',
+    position: 'fixed',
+    top: 0,
   },
   headerLeftItems: {
     flexGrow: 1,
