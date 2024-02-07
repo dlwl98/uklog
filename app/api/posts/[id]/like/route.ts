@@ -1,4 +1,5 @@
 import { PostsService } from '@/app/_lib/posts/Posts.service';
+import { getRequestIp } from '@/app/_utils/getRequestIp';
 import { revalidatePath } from 'next/cache';
 
 export async function POST(
@@ -6,8 +7,7 @@ export async function POST(
   { params }: { params: { id: string } },
 ) {
   try {
-    const { liked }: { liked: string } = await req.json();
-    const post = await PostsService.createLike(params.id, liked);
+    const post = await PostsService.createLike(params.id, getRequestIp(req));
     revalidatePath(`/posts/${params.id}`);
 
     return Response.json(post);
@@ -26,8 +26,7 @@ export async function DELETE(
   { params }: { params: { id: string } },
 ) {
   try {
-    const { liked }: { liked: string } = await req.json();
-    const post = await PostsService.deleteLike(params.id, liked);
+    const post = await PostsService.deleteLike(params.id, getRequestIp(req));
     revalidatePath(`/posts/${params.id}`);
 
     return Response.json(post);

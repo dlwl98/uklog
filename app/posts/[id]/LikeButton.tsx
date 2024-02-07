@@ -18,9 +18,9 @@ export default function LikeButton({
   const router = useRouter();
 
   useEffect(() => {
-    fetch('https://geolocation-db.com/json/')
+    fetch('/api/ip')
       .then((res) => res.json())
-      .then(({ IPv4: ip }) => {
+      .then(({ ip }) => {
         setIp(ip);
       });
   });
@@ -36,7 +36,6 @@ export default function LikeButton({
           'Content-Type': 'application/json',
         },
         method: 'DELETE',
-        body: JSON.stringify({ liked: ip }),
       })
         .then((res) => res.json())
         .then(() => router.refresh());
@@ -46,7 +45,6 @@ export default function LikeButton({
           'Content-Type': 'application/json',
         },
         method: 'POST',
-        body: JSON.stringify({ liked: ip }),
       })
         .then((res) => res.json())
         .then(() => router.refresh());
