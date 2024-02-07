@@ -18,8 +18,7 @@ export default async function Page({ params }: { params: { id: string } }) {
       </Link>
       <h3>{title}</h3>
       <div>{content}</div>
-      <div>likes: {likes.length}</div>
-      <LikeButton likes={likes} postId={post._id.toString()} />
+      <LikeButton initialCount={likes.length} postId={post._id.toString()} />
       <div>{new Date(createdAt).toLocaleString()}</div>
       <div>{new Date().toLocaleString()}</div>
       <AdminButtons />

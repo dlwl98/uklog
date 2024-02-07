@@ -1,46 +1,48 @@
 'use client';
 
 import { useRouter } from 'next/navigation';
-import { useCallback, useEffect, useMemo, useState } from 'react';
+import { useCallback, useEffect, useRef, useState } from 'react';
 
 export default function LikeButton({
-  likes,
+  initialCount,
   postId,
 }: {
-  likes: string[];
+  initialCount: number;
   postId: string;
 }) {
-  const [ip, setIp] = useState<string | null>(null);
-  const liked = useMemo(
-    () => (ip ? new Set(likes).has(ip) : false),
-    [ip, likes],
-  );
-  const router = useRouter();
+  const [isLoading, setIsLoading] = useState(false);
+  const [count, setCount] = useState(initialCount);
+  const [isLike, setIsLike] = useState<boolean | null>(null);
 
   useEffect(() => {
-    if (!ip) {
-      fetch('/api/ip')
-        .then((res) => res.json())
-        .then(({ ip }) => {
-          setIp(ip);
-        });
-    }
-  }, [ip]);
+    setIsLoading(true);
+    fetch(`/api/posts/${postId}/like`)
+      .then((res) => res.json())
+      .then(({ count, isLike }) => {
+        setCount(count);
+        setIsLike(isLike);
+      })
+      .finally(() => setIsLoading(false));
+  }, [postId]);
 
   const handleClick = useCallback(() => {
-    if (!ip) {
+    if (isLike === null || isLoading) {
       return;
     }
 
-    if (liked) {
+    setIsLoading(true);
+    if (isLike) {
       fetch(`/api/posts/${postId}/like`, {
         headers: {
           'Content-Type': 'application/json',
         },
         method: 'DELETE',
       })
-        .then((res) => res.json())
-        .then(() => router.refresh());
+        .then(() => {
+          setCount((prev) => prev - 1);
+          setIsLike(false);
+        })
+        .finally(() => setIsLoading(false));
     } else {
       fetch(`/api/posts/${postId}/like`, {
         headers: {
@@ -48,10 +50,18 @@ export default function LikeButton({
         },
         method: 'POST',
       })
-        .then((res) => res.json())
-        .then(() => router.refresh());
+        .then(() => {
+          setCount((prev) => prev + 1);
+          setIsLike(true);
+        })
+        .finally(() => setIsLoading(false));
     }
-  }, [ip, liked, router, postId]);
+  }, [isLike, isLoading, postId]);
 
-  return <button onClick={handleClick}>{liked ? '❤️' : '🤍'}</button>;
+  return (
+    <>
+      <div>likes: {count}</div>
+      <button onClick={handleClick}>{isLike ? '❤️' : '🤍'}</button>
+    </>
+  );
 }
