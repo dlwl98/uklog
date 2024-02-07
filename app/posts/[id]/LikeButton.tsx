@@ -1,7 +1,7 @@
 'use client';
 
 import { useRouter } from 'next/navigation';
-import { useEffect, useMemo, useState } from 'react';
+import { useCallback, useEffect, useMemo, useState } from 'react';
 
 export default function LikeButton({
   likes,
@@ -18,14 +18,16 @@ export default function LikeButton({
   const router = useRouter();
 
   useEffect(() => {
-    fetch('/api/ip')
-      .then((res) => res.json())
-      .then(({ ip }) => {
-        setIp(ip);
-      });
-  });
+    if (!ip) {
+      fetch('/api/ip')
+        .then((res) => res.json())
+        .then(({ ip }) => {
+          setIp(ip);
+        });
+    }
+  }, [ip]);
 
-  const handleClick = () => {
+  const handleClick = useCallback(() => {
     if (!ip) {
       return;
     }
@@ -49,7 +51,7 @@ export default function LikeButton({
         .then((res) => res.json())
         .then(() => router.refresh());
     }
-  };
+  }, [ip, liked, router, postId]);
 
   return <button onClick={handleClick}>{liked ? '❤️' : '🤍'}</button>;
 }
