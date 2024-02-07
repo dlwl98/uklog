@@ -14,6 +14,7 @@ async function handleSubmit(formData: FormData) {
         .setExpirationTime('72h')
         .sign(new TextEncoder().encode(process.env.JWT_SECRET!));
 
+      cookies().set('loggedIn', 'true');
       cookies().set('token', token, {
         httpOnly: true,
         expires: Date.now() + 1000 * 60 * 60 * 24 * 3,

@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { jwtVerify } from 'jose';
+import { cookies } from 'next/headers';
 
 function isLoginRequire(pathname: string) {
   const loginRequirePathMatchers = [/\/write/, /\/posts\/[^\/]+\/edit$/];
@@ -12,7 +13,7 @@ function isLoginRequire(pathname: string) {
 }
 
 export async function middleware(request: NextRequest) {
-  const response = new NextResponse();
+  const response = NextResponse.next();
   const token = request.cookies.get('token')?.value;
 
   try {
@@ -20,15 +21,12 @@ export async function middleware(request: NextRequest) {
       throw new Error('Token not found');
     }
     await jwtVerify(token, new TextEncoder().encode(process.env.JWT_SECRET!));
-    response.cookies
-      .set('loggedIn', 'true')
-      .set('token', token, { httpOnly: true });
-    return NextResponse.next(response);
+    return response;
   } catch (error) {
     response.cookies.set('loggedIn', 'false');
     if (isLoginRequire(request.nextUrl.pathname)) {
       return NextResponse.redirect(new URL('/login', request.url));
     }
-    return NextResponse.next(response);
+    return response;
   }
 }
