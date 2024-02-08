@@ -11,6 +11,7 @@ async function handleSubmit(formData: FormData) {
   if (title && content) {
     await PostsService.updatePost(id!, { title, content });
     revalidatePath('/');
+    revalidatePath(`/posts/${id}`);
     redirect(`/posts/${id}`);
   }
 }
