@@ -10,11 +10,14 @@ export default function Content({ source }: { source: string }) {
       {...stylex.props(layout.default, styles.layout)}
       data-color-mode="light"
     >
-      <MDEditor.Markdown source={source} />
+      <MDEditor.Markdown source={source} {...stylex.props(styles.md)} />
     </div>
   );
 }
 
 const styles = stylex.create({
   layout: { padding: '10px' },
+  md: {
+    fontFamily: 'Pretendard',
+  },
 });
