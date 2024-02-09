@@ -1,6 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { jwtVerify } from 'jose';
-import { cookies } from 'next/headers';
 
 function isLoginRequire(pathname: string) {
   const loginRequirePathMatchers = [/\/write/, /\/posts\/[^\/]+\/edit$/];
@@ -25,7 +24,9 @@ export async function middleware(request: NextRequest) {
   } catch (error) {
     response.cookies.set('loggedIn', 'false');
     if (isLoginRequire(request.nextUrl.pathname)) {
-      return NextResponse.redirect(new URL('/login', request.url));
+      return NextResponse.redirect(
+        new URL(`/login?redirect=${request.nextUrl.pathname}`, request.url),
+      );
     }
     return response;
   }
