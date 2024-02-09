@@ -2,7 +2,7 @@
 
 import stylex from '@stylexjs/stylex';
 import Link from 'next/link';
-import { useRouter } from 'next/navigation';
+import { usePathname, useRouter } from 'next/navigation';
 import { useCallback } from 'react';
 import useLoggedIn from '@/app/_hooks/useLoggedIn';
 import { button } from '@/app/global.stylex';
@@ -10,6 +10,7 @@ import { button } from '@/app/global.stylex';
 export function LoginButton() {
   const loggedIn = useLoggedIn();
   const router = useRouter();
+  const pathname = usePathname();
 
   const logout = useCallback(() => {
     fetch('/api/logout', { method: 'POST' }).then(() => {
@@ -31,7 +32,7 @@ export function LoginButton() {
   }
 
   return (
-    <Link href={'/login'}>
+    <Link href={`/login?redirect=${pathname}`}>
       <button {...stylex.props(button.default, styles.loginButton)}>
         관리자 로그인
       </button>

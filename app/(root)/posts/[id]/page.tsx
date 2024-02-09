@@ -5,6 +5,8 @@ import LikeButton from './LikeButton';
 import AdminButtons from './AdminButtons';
 import Content from './Content';
 
+export const revalidate = 30;
+
 export default async function Page({ params }: { params: { id: string } }) {
   const post = await PostsService.getPostById(params.id);
   if (!post) {
