@@ -1,8 +1,8 @@
 'use client';
 
+import { useCallback, useEffect, useState } from 'react';
 import { flex } from '@/app/global.stylex';
 import stylex from '@stylexjs/stylex';
-import { useCallback, useEffect, useState } from 'react';
 
 export default function LikeButton({
   initialCount,

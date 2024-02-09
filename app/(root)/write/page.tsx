@@ -1,7 +1,7 @@
-import { redirect } from 'next/navigation';
-import { PostsService } from '../_lib/posts/Posts.service';
 import Link from 'next/link';
+import { redirect } from 'next/navigation';
 import { revalidatePath } from 'next/cache';
+import { PostsService } from '@/app/_lib/posts/Posts.service';
 
 async function handleSubmit(formData: FormData) {
   'use server';

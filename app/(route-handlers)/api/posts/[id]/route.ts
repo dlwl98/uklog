@@ -1,5 +1,5 @@
-import { PostsService } from '@/app/_lib/posts/Posts.service';
 import { revalidatePath } from 'next/cache';
+import { PostsService } from '@/app/_lib/posts/Posts.service';
 
 export async function GET(
   req: Request,

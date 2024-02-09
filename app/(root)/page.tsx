@@ -1,7 +1,7 @@
-import stylex from '@stylexjs/stylex';
-import { PostsService } from './_lib/posts/Posts.service';
 import Link from 'next/link';
-import { flex, layout } from './global.stylex';
+import stylex from '@stylexjs/stylex';
+import { PostsService } from '@/app/_lib/posts/Posts.service';
+import { flex, layout } from '@/app/global.stylex';
 
 export const revalidate = 30;
 

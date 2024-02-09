@@ -4,8 +4,8 @@ import stylex from '@stylexjs/stylex';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import { useCallback } from 'react';
-import useLoggedIn from '../_hooks/useLoggedIn';
-import { button } from '../global.stylex';
+import useLoggedIn from '@/app/_hooks/useLoggedIn';
+import { button } from '@/app/global.stylex';
 
 export function LoginButton() {
   const loggedIn = useLoggedIn();

@@ -1,8 +1,8 @@
 import stylex from '@stylexjs/stylex';
 import { PostsService } from '@/app/_lib/posts/Posts.service';
+import { flex, layout } from '@/app/global.stylex';
 import LikeButton from './LikeButton';
 import AdminButtons from './AdminButtons';
-import { flex, layout } from '@/app/global.stylex';
 import Content from './Content';
 
 export default async function Page({ params }: { params: { id: string } }) {

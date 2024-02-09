@@ -1,10 +1,10 @@
-import stylex from '@stylexjs/stylex';
-import './globals.css';
-import { LoginButton } from './_components/LoginButton';
+import '../globals.css';
 import Link from 'next/link';
-import { flex } from './global.stylex';
-import ScrollTop from './_components/ScrollTop';
-import HashScroller from './_components/HashScroller';
+import stylex from '@stylexjs/stylex';
+import { flex } from '@/app/global.stylex';
+import { LoginButton } from '@/app/_components/LoginButton';
+import ScrollTop from '@/app/_components/ScrollTop';
+import HashScroller from '@/app/_components/HashScroller';
 
 export default function Layout({ children }: { children: React.ReactNode }) {
   return (

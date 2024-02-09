@@ -1,8 +1,8 @@
-import { verifyPassword } from '../_utils/crypto';
 import { cookies } from 'next/headers';
 import { SignJWT } from 'jose';
 import { redirect } from 'next/navigation';
 import Link from 'next/link';
+import { verifyPassword } from '@/app/_utils/crypto';
 
 async function handleSubmit(formData: FormData) {
   'use server';
