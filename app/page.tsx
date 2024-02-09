@@ -1,7 +1,7 @@
 import stylex from '@stylexjs/stylex';
 import { PostsService } from './_lib/posts/Posts.service';
 import Link from 'next/link';
-import { flex } from './global.stylex';
+import { flex, layout } from './global.stylex';
 
 export const revalidate = 30;
 
@@ -10,7 +10,7 @@ export default async function Page() {
 
   return (
     <>
-      <div {...stylex.props(flex.column, styles.layout)}>
+      <div {...stylex.props(flex.column, layout.default, styles.layout)}>
         {posts.map(({ _id, title, createdAt }) => (
           <Link key={_id.toString()} href={`/posts/${_id}`}>
             <div {...stylex.props(flex.column, styles.post)}>
@@ -29,7 +29,6 @@ export default async function Page() {
 const styles = stylex.create({
   layout: {
     gap: '10px',
-    margin: '10px',
     flexDirection: 'column-reverse',
   },
   post: {

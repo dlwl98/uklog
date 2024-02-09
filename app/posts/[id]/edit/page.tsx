@@ -37,7 +37,7 @@ export default async function Page({ params }: { params: { id: string } }) {
         </div>
         <div>
           <span>content</span>
-          <input type="text" name="content" defaultValue={content} />
+          <textarea name="content" defaultValue={content} />
         </div>
         <button type="submit">post!</button>
       </form>

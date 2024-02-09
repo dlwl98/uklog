@@ -3,11 +3,24 @@ import './globals.css';
 import { LoginButton } from './_components/LoginButton';
 import Link from 'next/link';
 import { flex } from './global.stylex';
+import ScrollTop from './_components/ScrollTop';
+import HashScroller from './_components/HashScroller';
 
 export default function Layout({ children }: { children: React.ReactNode }) {
   return (
     <html {...stylex.props(styles.reset, styles.html)} lang="ko">
       <body {...stylex.props(styles.reset, flex.column, styles.body)}>
+        <ScrollTop />
+        <HashScroller offset={80} />
+        <main {...stylex.props(styles.main)}>{children}</main>
+        <div {...stylex.props(flex.center, styles.footer)}>
+          <Link href="/">
+            <div {...stylex.props(flex.row, styles.copyrights)}>
+              <span>©</span>
+              <span>2024 dlwl98</span>
+            </div>
+          </Link>
+        </div>
         <div {...stylex.props(flex.row, styles.header)}>
           <div {...stylex.props(flex.row, styles.headerLeftItems)}>
             <Link href="/">Posts</Link>
@@ -17,15 +30,6 @@ export default function Layout({ children }: { children: React.ReactNode }) {
             <LoginButton />
           </div>
         </div>
-        <main {...stylex.props(styles.main)}>{children}</main>
-        <Link href="/">
-          <div {...stylex.props(flex.center, styles.footer)}>
-            <div {...stylex.props(flex.row, styles.copyrights)}>
-              <span>©</span>
-              <span>2024 dlwl98</span>
-            </div>
-          </div>
-        </Link>
       </body>
     </html>
   );
@@ -44,7 +48,7 @@ const styles = stylex.create({
     maxWidth: '1000px',
     minHeight: '100vh',
     margin: 'auto',
-    marginTop: '60px',
+    paddingTop: '60px',
     fontSize: '1rem',
   },
   header: {

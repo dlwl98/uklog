@@ -16,3 +16,21 @@ export const flex = stylex.create({
     justifyContent: 'center',
   },
 });
+
+export const layout = stylex.create({
+  default: {
+    margin: '10px',
+  },
+});
+
+export const button = stylex.create({
+  default: {
+    padding: '6px',
+    backgroundColor: 'transparent',
+    borderRadius: '10px',
+    borderWidth: '1px',
+    borderStyle: 'solid',
+    borderColor: 'lightgray',
+    cursor: 'pointer',
+  },
+});

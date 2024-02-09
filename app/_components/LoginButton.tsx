@@ -5,6 +5,7 @@ import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import { useCallback } from 'react';
 import useLoggedIn from '../_hooks/useLoggedIn';
+import { button } from '../global.stylex';
 
 export function LoginButton() {
   const loggedIn = useLoggedIn();
@@ -20,9 +21,9 @@ export function LoginButton() {
     return (
       <>
         <Link href={'/write'}>
-          <button {...stylex.props(styles.button)}>글쓰기</button>
+          <button {...stylex.props(button.default)}>글쓰기</button>
         </Link>
-        <button {...stylex.props(styles.button)} onClick={logout}>
+        <button {...stylex.props(button.default)} onClick={logout}>
           로그아웃
         </button>
       </>
@@ -31,7 +32,7 @@ export function LoginButton() {
 
   return (
     <Link href={'/login'}>
-      <button {...stylex.props(styles.button, styles.loginButton)}>
+      <button {...stylex.props(button.default, styles.loginButton)}>
         관리자 로그인
       </button>
     </Link>
@@ -39,15 +40,6 @@ export function LoginButton() {
 }
 
 const styles = stylex.create({
-  button: {
-    padding: '6px',
-    backgroundColor: 'transparent',
-    borderRadius: '10px',
-    borderWidth: '1px',
-    borderStyle: 'solid',
-    borderColor: 'lightgray',
-    cursor: 'pointer',
-  },
   loginButton: {
     borderWidth: 0,
     fontSize: '0.75rem',

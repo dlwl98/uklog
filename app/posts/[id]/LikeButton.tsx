@@ -1,7 +1,8 @@
 'use client';
 
-import { useRouter } from 'next/navigation';
-import { useCallback, useEffect, useRef, useState } from 'react';
+import { flex } from '@/app/global.stylex';
+import stylex from '@stylexjs/stylex';
+import { useCallback, useEffect, useState } from 'react';
 
 export default function LikeButton({
   initialCount,
@@ -59,9 +60,24 @@ export default function LikeButton({
   }, [isLike, isLoading, postId]);
 
   return (
-    <>
-      <div>likes: {count}</div>
-      <button onClick={handleClick}>{isLike ? '❤️' : '🤍'}</button>
-    </>
+    <div {...stylex.props(flex.row, styles.wrapper)}>
+      <div>{count}</div>
+      <button {...stylex.props(styles.button)} onClick={handleClick}>
+        {isLike ? '❤️' : '🤍'}
+      </button>
+    </div>
   );
 }
+
+const styles = stylex.create({
+  wrapper: {
+    gap: '5px',
+    justifyContent: 'flex-end',
+  },
+  button: {
+    backgroundColor: 'transparent',
+    borderWidth: 0,
+    cursor: 'pointer',
+    fontSize: '1.5rem',
+  },
+});
