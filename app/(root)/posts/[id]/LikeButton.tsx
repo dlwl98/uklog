@@ -82,14 +82,14 @@ export default function LikeButton({
 const styles = stylex.create({
   wrapper: {
     gap: '5px',
+    marginTop: '5px',
     justifyContent: 'flex-end',
   },
   button: {
     backgroundColor: 'transparent',
     borderWidth: 0,
     cursor: 'pointer',
-    fontSize: '1.5rem',
+    height: '30px',
     textAlign: 'center',
-    marginTop: '6px',
   },
 });
