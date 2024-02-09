@@ -1,8 +1,9 @@
 'use client';
 
 import { useCallback, useEffect, useState } from 'react';
-import { flex } from '@/app/global.stylex';
 import stylex from '@stylexjs/stylex';
+import Image from 'next/image';
+import { flex } from '@/app/global.stylex';
 
 export default function LikeButton({
   initialCount,
@@ -63,7 +64,16 @@ export default function LikeButton({
     <div {...stylex.props(flex.row, styles.wrapper)}>
       <div>{count}</div>
       <button {...stylex.props(styles.button)} onClick={handleClick}>
-        {isLike ? '❤️' : '🤍'}
+        {isLike ? (
+          <Image
+            src="/images/heart-fill.svg"
+            alt="heart"
+            width={30}
+            height={30}
+          />
+        ) : (
+          <Image src="/images/heart.svg" alt="heart" width={30} height={30} />
+        )}
       </button>
     </div>
   );
@@ -79,5 +89,7 @@ const styles = stylex.create({
     borderWidth: 0,
     cursor: 'pointer',
     fontSize: '1.5rem',
+    textAlign: 'center',
+    marginTop: '6px',
   },
 });
