@@ -50,5 +50,6 @@ const styles = stylex.create({
       default: 'none',
       ':hover': 'underline',
     },
+    color: 'black',
   },
 });
