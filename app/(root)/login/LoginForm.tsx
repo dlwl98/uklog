@@ -1,9 +1,11 @@
 'use client';
 
-import { useFormState } from 'react-dom';
-import SubmitButton from './SubmitButton';
-import { useRouter, useSearchParams } from 'next/navigation';
 import { useEffect } from 'react';
+import { useFormState } from 'react-dom';
+import { useRouter, useSearchParams } from 'next/navigation';
+import stylex from '@stylexjs/stylex';
+import SubmitButton from './SubmitButton';
+import { flex } from '@/app/global.stylex';
 
 export type LoginAction = (
   prevState: { message: string; success: boolean },
@@ -25,13 +27,44 @@ export default function LoginForm({ action }: { action: LoginAction }) {
   }, [state.success, router, query]);
 
   return (
-    <form action={formAction}>
-      <div>
-        <span>password</span>
-        <input type="password" name="password" />
+    <form {...stylex.props(styles.layout)} action={formAction}>
+      <div {...stylex.props(flex.column, styles.inputBox)}>
+        <input
+          {...stylex.props(styles.input)}
+          type="password"
+          name="password"
+          placeholder="비밀번호를 입력하세요"
+        />
+        <div {...stylex.props(styles.message)}>{state?.message}</div>
       </div>
-      <div>{state?.message}</div>
       <SubmitButton />
     </form>
   );
 }
+
+const styles = stylex.create({
+  layout: {
+    marginTop: '10px',
+  },
+  inputBox: {
+    gap: '2px',
+  },
+  input: {
+    outline: 'none',
+    borderRadius: 0,
+    borderWidth: '2px',
+    borderStyle: 'solid',
+    borderColor: {
+      default: 'lightgray',
+      ':focus': 'gray',
+    },
+    fontSize: '1.1rem',
+    padding: '4px',
+  },
+  message: {
+    paddingLeft: '5px',
+    color: 'red',
+    fontWeight: 500,
+    fontSize: '0.8rem',
+  },
+});
