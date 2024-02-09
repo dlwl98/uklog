@@ -26,7 +26,12 @@ export const layout = stylex.create({
 export const button = stylex.create({
   default: {
     padding: '6px',
-    backgroundColor: 'transparent',
+    backgroundColor: 'white',
+    filter: {
+      default: 'none',
+      ':hover': 'brightness(0.9)',
+    },
+    transition: 'filter 0.5s ease',
     borderRadius: '10px',
     borderWidth: '1px',
     borderStyle: 'solid',

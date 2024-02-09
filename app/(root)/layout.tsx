@@ -8,7 +8,7 @@ import HashScroller from '@/app/_components/HashScroller';
 
 export default function Layout({ children }: { children: React.ReactNode }) {
   return (
-    <html {...stylex.props(styles.reset, styles.html)} lang="ko">
+    <html {...stylex.props(styles.reset)} lang="ko">
       <body {...stylex.props(styles.reset, flex.column, styles.body)}>
         <ScrollTop />
         <HashScroller offset={80} />
@@ -36,9 +36,6 @@ export default function Layout({ children }: { children: React.ReactNode }) {
 }
 
 const styles = stylex.create({
-  html: {
-    fontFamily: 'Pretendard',
-  },
   reset: {
     margin: 0,
     padding: 0,

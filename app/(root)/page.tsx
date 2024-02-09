@@ -43,6 +43,7 @@ const styles = stylex.create({
       default: 'inherit',
       ':hover': 'lightgray',
     },
+    transition: 'background-color 0.5s ease',
   },
   createdAt: {
     fontWeight: 300,
