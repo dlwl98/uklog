@@ -26,6 +26,8 @@ export const layout = stylex.create({
 export const button = stylex.create({
   default: {
     padding: '6px',
+    paddingTop: '7px',
+    paddingBottom: '8px',
     backgroundColor: 'white',
     filter: {
       default: 'none',
@@ -37,5 +39,9 @@ export const button = stylex.create({
     borderStyle: 'solid',
     borderColor: 'lightgray',
     cursor: 'pointer',
+    fontSize: '0.8rem',
+    lineHeight: '0.8rem',
+    color: 'black',
+    fontWeight: 400,
   },
 });

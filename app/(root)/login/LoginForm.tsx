@@ -48,11 +48,13 @@ const styles = stylex.create({
   },
   inputBox: {
     gap: '2px',
+    width: '300px',
   },
   input: {
     outline: 'none',
     borderRadius: 0,
-    borderWidth: '2px',
+    borderWidth: 0,
+    borderBottomWidth: '2px',
     borderStyle: 'solid',
     borderColor: {
       default: 'lightgray',
