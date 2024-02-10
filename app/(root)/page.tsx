@@ -11,11 +11,12 @@ export default async function Page() {
   return (
     <>
       <div {...stylex.props(flex.column, layout.default, styles.layout)}>
-        {posts.map(({ _id, title, createdAt }) => (
+        {posts.map(({ _id, title, spoiler, createdAt }) => (
           <Link key={_id.toString()} href={`/posts/${_id}`}>
             <div {...stylex.props(flex.column, styles.post)}>
               <h2>{title}</h2>
-              <div {...stylex.props(styles.createdAt)}>
+              <div {...stylex.props(styles.postDetail)}>{spoiler}</div>
+              <div {...stylex.props(styles.postDetail)}>
                 {new Date(createdAt).toISOString().slice(0, 10)}
               </div>
             </div>
@@ -45,7 +46,7 @@ const styles = stylex.create({
     },
     transition: 'background-color 0.5s ease',
   },
-  createdAt: {
+  postDetail: {
     fontWeight: 300,
     fontSize: '0.8rem',
   },

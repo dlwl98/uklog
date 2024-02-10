@@ -8,8 +8,9 @@ async function handleSubmit(formData: FormData) {
   const id = formData.get('id')?.toString();
   const title = formData.get('title')?.toString();
   const content = formData.get('content')?.toString();
-  if (title && content) {
-    await PostsService.updatePost(id!, { title, content });
+  const spoiler = formData.get('spoiler')?.toString();
+  if (title && content && spoiler) {
+    await PostsService.updatePost(id!, { title, content, spoiler });
     revalidatePath('/');
     revalidatePath(`/posts/${id}`);
     redirect(`/posts/${id}`);
@@ -22,7 +23,7 @@ export default async function Page({ params }: { params: { id: string } }) {
     throw new Error(`cannot find post id: ${params.id}`);
   }
 
-  const { title, content } = post;
+  const { title, content, spoiler } = post;
 
   return (
     <div>
@@ -38,6 +39,10 @@ export default async function Page({ params }: { params: { id: string } }) {
         <div>
           <span>content</span>
           <textarea name="content" defaultValue={content} />
+        </div>
+        <div>
+          <span>spoiler</span>
+          <input type="text" name="spoiler" defaultValue={spoiler} />
         </div>
         <button type="submit">post!</button>
       </form>

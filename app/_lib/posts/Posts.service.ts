@@ -14,9 +14,14 @@ export class PostsService {
     return Post.findById(id).lean().exec();
   }
 
-  static async createPost({ title, content, tags = [] }: CreatePostDto) {
+  static async createPost({
+    title,
+    content,
+    spoiler,
+    tags = [],
+  }: CreatePostDto) {
     await connectDB();
-    return Post.create({ title, content, tags });
+    return Post.create({ title, content, spoiler, tags });
   }
 
   static async deletePost(id: string) {
@@ -24,7 +29,10 @@ export class PostsService {
     return Post.findByIdAndDelete(id);
   }
 
-  static async updatePost(id: string, { title, content, tags }: UpdatePostDto) {
+  static async updatePost(
+    id: string,
+    { title, content, spoiler, tags }: UpdatePostDto,
+  ) {
     await connectDB();
 
     const oldPost = await Post.findById(id);
@@ -35,6 +43,7 @@ export class PostsService {
     const newPost = {
       title: title || oldPost.title,
       content: content || oldPost.content,
+      spoiler: spoiler || oldPost.spoiler,
       tags: tags || oldPost.tags,
     };
     return Post.findByIdAndUpdate(id, newPost).lean().exec();

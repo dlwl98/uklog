@@ -7,8 +7,9 @@ async function handleSubmit(formData: FormData) {
   'use server';
   const title = formData.get('title')?.toString();
   const content = formData.get('content')?.toString();
-  if (title && content) {
-    const { _id } = await PostsService.createPost({ title, content });
+  const spoiler = formData.get('spoiler')?.toString();
+  if (title && content && spoiler) {
+    const { _id } = await PostsService.createPost({ title, content, spoiler });
     revalidatePath('/');
     redirect(`/posts/${_id}`);
   }
@@ -28,6 +29,10 @@ export default async function Page() {
         <div>
           <span>content</span>
           <input type="text" name="content" />
+        </div>
+        <div>
+          <span>spoiler</span>
+          <input type="text" name="spoiler" />
         </div>
         <button type="submit">post!</button>
       </form>

@@ -13,14 +13,15 @@ export default async function Page({ params }: { params: { id: string } }) {
     throw new Error(`cannot find post id: ${params.id}`);
   }
 
-  const { title, content, createdAt, likes } = post;
+  const { title, content, spoiler, createdAt, likes } = post;
 
   return (
     <div {...stylex.props(layout.default)}>
       <div {...stylex.props(flex.row, styles.header)}>
         <h1 {...stylex.props(flex.column, styles.title)}>
           {title}
-          <div {...stylex.props(styles.createdAt)}>
+          <div {...stylex.props(styles.postDetail)}>{spoiler}</div>
+          <div {...stylex.props(styles.postDetail)}>
             {new Date(createdAt).toISOString().slice(0, 10)}
           </div>
         </h1>
@@ -47,7 +48,11 @@ export async function generateStaticParams() {
 
 const styles = stylex.create({
   header: {
-    margin: '20px',
+    margin: '10px',
+    padding: '10px',
+    borderRadius: '8px',
+    backgroundColor: 'white',
+    filter: 'brightness(0.95)',
   },
   title: {
     flexGrow: 1,
@@ -55,7 +60,7 @@ const styles = stylex.create({
     fontSize: '2.5rem',
     fontWeight: 900,
   },
-  createdAt: {
+  postDetail: {
     fontWeight: 300,
     fontSize: '0.8rem',
     color: 'gray',
