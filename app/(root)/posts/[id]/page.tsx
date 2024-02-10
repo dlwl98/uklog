@@ -57,8 +57,6 @@ const styles = stylex.create({
   title: {
     flexGrow: 1,
     gap: '10px',
-    fontSize: '2.5rem',
-    fontWeight: 900,
   },
   postDetail: {
     fontWeight: 300,

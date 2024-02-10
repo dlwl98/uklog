@@ -40,14 +40,16 @@ const styles = stylex.create({
     paddingTop: '15px',
     paddingBottom: '15px',
     borderRadius: '8px',
-    backgroundColor: {
-      default: 'inherit',
-      ':hover': 'lightgray',
+    backgroundColor: 'white',
+    filter: {
+      default: 'none',
+      ':hover': 'brightness(0.9)',
     },
-    transition: 'background-color 0.5s ease',
+    transition: 'filter 0.5s ease',
   },
   postDetail: {
     fontWeight: 300,
     fontSize: '0.8rem',
+    color: 'gray',
   },
 });
