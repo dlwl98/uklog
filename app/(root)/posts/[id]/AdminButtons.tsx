@@ -46,6 +46,7 @@ const styles = stylex.create({
     borderWidth: 0,
     fontSize: '0.8rem',
     cursor: 'pointer',
+    textWrap: 'nowrap',
     textDecoration: {
       default: 'none',
       ':hover': 'underline',
