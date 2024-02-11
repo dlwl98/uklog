@@ -1,6 +1,6 @@
 'use client';
 
-import { useRef, useState } from 'react';
+import { ChangeEvent, useCallback, useRef, useState } from 'react';
 import stylex from '@stylexjs/stylex';
 import Content from '@/app/(root)/posts/[id]/Content';
 
@@ -20,7 +20,42 @@ export default function EditForm({
   content: initialContent,
 }: Props) {
   const [isPreview, setIsPreview] = useState(false);
+  const [fileUploadCount, setFileUploadCount] = useState(0);
   const contentRef = useRef(initialContent);
+  const fileRef = useRef<File | null>(null);
+
+  const upload = useCallback(async () => {
+    if (fileRef.current === null) {
+      return;
+    }
+    const formData = new FormData();
+    formData.append('file', fileRef.current);
+    const res = await fetch('/api/upload', {
+      method: 'POST',
+      body: formData,
+    });
+    const { href } = (await res.json()) as { href: unknown };
+
+    if (typeof href === 'string') {
+      contentRef.current += `![image alt here](${href})`;
+      setFileUploadCount((prev) => prev + 1);
+    }
+  }, []);
+
+  const preview = useCallback(() => setIsPreview((prev) => !prev), []);
+
+  const handleContentChange = useCallback(
+    (e: ChangeEvent<HTMLTextAreaElement>) =>
+      (contentRef.current = e.target.value),
+    [],
+  );
+
+  const handleFileChange = useCallback((e: ChangeEvent<HTMLInputElement>) => {
+    const files = e.target.files;
+    if (files) {
+      fileRef.current = files[0];
+    }
+  }, []);
 
   return (
     <form action={handleSubmit}>
@@ -32,9 +67,10 @@ export default function EditForm({
           {...stylex.props(
             styles.contentTextarea(!isPreview ? 'block' : 'none'),
           )}
+          key={fileUploadCount}
           name="content"
           defaultValue={contentRef.current}
-          onChange={(e) => (contentRef.current = e.target.value)}
+          onChange={handleContentChange}
         />
         <div style={{ display: isPreview ? 'block' : 'none' }}>
           <Content key={`${isPreview}`} source={contentRef.current} />
@@ -42,7 +78,13 @@ export default function EditForm({
       </div>
       <button type="submit">완료</button>
       <div {...stylex.props(styles.header)}>
-        <button onClick={() => setIsPreview((prev) => !prev)} type="button">
+        <div>
+          <input type="file" onChange={handleFileChange} />
+          <button type="button" onClick={upload}>
+            업로드
+          </button>
+        </div>
+        <button onClick={preview} type="button">
           미리보기
         </button>
         <div>
