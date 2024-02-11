@@ -1,7 +1,7 @@
-import { PostsService } from '@/app/_lib/posts/Posts.service';
-import { revalidatePath } from 'next/cache';
-import Link from 'next/link';
 import { redirect } from 'next/navigation';
+import { revalidatePath } from 'next/cache';
+import EditForm from '@/app/_components/EditForm';
+import { PostsService } from '@/app/_lib/posts/Posts.service';
 
 async function handleSubmit(formData: FormData) {
   'use server';
@@ -26,26 +26,12 @@ export default async function Page({ params }: { params: { id: string } }) {
   const { title, content, spoiler } = post;
 
   return (
-    <div>
-      <Link href="/">
-        <button>리스트로</button>
-      </Link>
-      <form action={handleSubmit}>
-        <input type="hidden" name="id" defaultValue={params.id} readOnly />
-        <div>
-          <span>title</span>
-          <input type="text" name="title" defaultValue={title} />
-        </div>
-        <div>
-          <span>content</span>
-          <textarea name="content" defaultValue={content} />
-        </div>
-        <div>
-          <span>spoiler</span>
-          <input type="text" name="spoiler" defaultValue={spoiler} />
-        </div>
-        <button type="submit">post!</button>
-      </form>
-    </div>
+    <EditForm
+      id={params.id}
+      title={title}
+      spoiler={spoiler}
+      content={content}
+      handleSubmit={handleSubmit}
+    />
   );
 }

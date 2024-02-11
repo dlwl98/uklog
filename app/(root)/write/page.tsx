@@ -1,7 +1,7 @@
-import Link from 'next/link';
 import { redirect } from 'next/navigation';
 import { revalidatePath } from 'next/cache';
 import { PostsService } from '@/app/_lib/posts/Posts.service';
+import EditForm from '@/app/_components/EditForm';
 
 async function handleSubmit(formData: FormData) {
   'use server';
@@ -17,25 +17,6 @@ async function handleSubmit(formData: FormData) {
 
 export default async function Page() {
   return (
-    <div>
-      <Link href="/">
-        <button>리스트로</button>
-      </Link>
-      <form action={handleSubmit}>
-        <div>
-          <span>title</span>
-          <input type="text" name="title" />
-        </div>
-        <div>
-          <span>content</span>
-          <input type="text" name="content" />
-        </div>
-        <div>
-          <span>spoiler</span>
-          <input type="text" name="spoiler" />
-        </div>
-        <button type="submit">post!</button>
-      </form>
-    </div>
+    <EditForm title="" spoiler="" content="" handleSubmit={handleSubmit} />
   );
 }
