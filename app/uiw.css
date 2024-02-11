@@ -1,6 +1,10 @@
-.wmde-markdown {
+.wmde-markdown code * {
   font-family:
-    'Noto Sans KR',
-    sans-serif,
-    -apple-system;
+    ui-monospace,
+    SFMono-Regular,
+    SF Mono,
+    Menlo,
+    Consolas,
+    Liberation Mono,
+    monospace !important;
 }
