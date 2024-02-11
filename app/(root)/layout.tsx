@@ -1,4 +1,5 @@
 import '../globals.css';
+import '../uiw.css';
 import Link from 'next/link';
 import stylex from '@stylexjs/stylex';
 import { flex } from '@/app/global.stylex';
@@ -41,6 +42,7 @@ const styles = stylex.create({
     padding: 0,
   },
   body: {
+    fontFamily: "'Noto Sans KR', sans-serif, -apple-system",
     minWidth: '300px',
     maxWidth: '1000px',
     minHeight: '100vh',
