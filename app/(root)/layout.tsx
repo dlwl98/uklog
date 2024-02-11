@@ -6,6 +6,7 @@ import { flex } from '@/app/global.stylex';
 import { LoginButton } from '@/app/_components/LoginButton';
 import ScrollTop from '@/app/_components/ScrollTop';
 import HashScroller from '@/app/_components/HashScroller';
+import Image from 'next/image';
 
 export default function Layout({ children }: { children: React.ReactNode }) {
   return (
@@ -20,6 +21,18 @@ export default function Layout({ children }: { children: React.ReactNode }) {
               <span>©</span>
               <span>2024 dlwl98</span>
             </div>
+          </Link>
+          <Link
+            {...stylex.props(flex.center)}
+            target="_blank"
+            href="https://github.com/dlwl98"
+          >
+            <Image
+              src="/images/github.svg"
+              height={20}
+              width={20}
+              alt="github"
+            />
           </Link>
         </div>
         <div {...stylex.props(flex.row, styles.header)}>
@@ -81,7 +94,9 @@ const styles = stylex.create({
   },
   footer: {
     width: '100%',
+    height: '80px',
     padding: '10px',
+    gap: '10px',
   },
   copyrights: {
     fontWeight: 500,

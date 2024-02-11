@@ -39,6 +39,7 @@ export default function AdminButtons() {
 const styles = stylex.create({
   wrapper: {
     justifyContent: 'flex-end',
+    alignItems: 'flex-end',
     gap: '5px',
   },
   button: {
