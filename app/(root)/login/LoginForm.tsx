@@ -12,7 +12,7 @@ export type LoginAction = (
   formData: FormData,
 ) => Promise<{ message: string; success: boolean }>;
 
-export default function LoginForm({ action }: { action: LoginAction }) {
+const LoginForm = ({ action }: { action: LoginAction }) => {
   const [state, formAction] = useFormState(action, {
     message: '',
     success: false,
@@ -40,7 +40,7 @@ export default function LoginForm({ action }: { action: LoginAction }) {
       <SubmitButton />
     </form>
   );
-}
+};
 
 const styles = stylex.create({
   layout: {
@@ -70,3 +70,5 @@ const styles = stylex.create({
     fontSize: '0.8rem',
   },
 });
+
+export default LoginForm;

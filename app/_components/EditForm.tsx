@@ -13,13 +13,13 @@ type Props = {
   content: string;
 };
 
-export default function EditForm({
+const EditForm = ({
   handleSubmit,
   id,
   title,
   spoiler,
   content: initialContent,
-}: Props) {
+}: Props) => {
   const [isPreview, setIsPreview] = useState(false);
   const [fileUploadCount, setFileUploadCount] = useState(0);
   const [isFileUploading, setIsFileUploading] = useState(false);
@@ -124,7 +124,7 @@ export default function EditForm({
       </div>
     </form>
   );
-}
+};
 
 const styles = stylex.create({
   header: {
@@ -146,3 +146,5 @@ const styles = stylex.create({
     borderStyle: 'solid',
   }),
 });
+
+export default EditForm;
