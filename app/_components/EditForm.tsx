@@ -3,7 +3,7 @@
 import { ChangeEvent, useCallback, useRef, useState } from 'react';
 import stylex from '@stylexjs/stylex';
 import Content from '@/app/(root)/posts/[id]/Content';
-import { useFileUpload } from '@/app/_hooks/useFileUpload';
+import useDragDrop from '@/app/_hooks/useDragDrop';
 
 type Props = {
   handleSubmit: (formData: FormData) => Promise<void>;
@@ -51,7 +51,22 @@ const EditForm = ({
     setFileUploadCount((prev) => prev + 1);
   }, []);
 
-  const [isDragging, FileUploader] = useFileUpload(upload);
+  const handleFileChange = useCallback(
+    (e: ChangeEvent<HTMLInputElement> | DragEvent) => {
+      let file: File | undefined;
+      if ('dataTransfer' in e) {
+        file = e.dataTransfer?.files[0];
+      } else {
+        file = e.target.files?.[0];
+      }
+      if (file) {
+        upload(file);
+      }
+    },
+    [upload],
+  );
+
+  const [isDragging, dragRef] = useDragDrop<HTMLDivElement>(handleFileChange);
 
   const handleClickPreview = useCallback(
     () => setIsPreview((prev) => !prev),
@@ -62,16 +77,6 @@ const EditForm = ({
     (e: ChangeEvent<HTMLTextAreaElement>) =>
       (contentRef.current = e.target.value),
     [],
-  );
-
-  const handleFileChange = useCallback(
-    (e: ChangeEvent<HTMLInputElement>) => {
-      const files = e.target.files;
-      if (files && files[0]) {
-        upload(files[0]);
-      }
-    },
-    [upload],
   );
 
   const textareaVisible = !isPreview ? 'block' : 'none';
@@ -85,21 +90,19 @@ const EditForm = ({
     <form action={handleSubmit}>
       <input type="hidden" name="id" defaultValue={id} readOnly />
 
-      <FileUploader>
-        <div {...stylex.props(styles.content)}>
-          <span>content</span>
-          <textarea
-            {...stylex.props(contentTextareaStyle)}
-            key={fileUploadCount}
-            name="content"
-            defaultValue={contentRef.current}
-            onChange={handleContentChange}
-          />
-          <div style={{ display: isPreview ? 'block' : 'none' }}>
-            <Content key={`${isPreview}`} source={contentRef.current} />
-          </div>
+      <div {...stylex.props(styles.content)} ref={dragRef}>
+        <span>content</span>
+        <textarea
+          {...stylex.props(contentTextareaStyle)}
+          key={fileUploadCount}
+          name="content"
+          defaultValue={contentRef.current}
+          onChange={handleContentChange}
+        />
+        <div style={{ display: isPreview ? 'block' : 'none' }}>
+          <Content key={`${isPreview}`} source={contentRef.current} />
         </div>
-      </FileUploader>
+      </div>
       <button type="submit">완료</button>
 
       <div {...stylex.props(styles.header)}>

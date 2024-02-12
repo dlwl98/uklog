@@ -1,17 +1,12 @@
 'use client';
 
-import React, {
-  useCallback,
-  useRef,
-  useState,
-  useEffect,
-  PropsWithChildren,
-  useMemo,
-} from 'react';
+import { useCallback, useRef, useState, useEffect, useMemo } from 'react';
 
-export function useFileUpload(onFileDrop: (file: File) => void) {
+export default function useDragDrop<T extends HTMLElement>(
+  onDrop: (e: DragEvent) => void,
+) {
   const [isDragging, setIsDragging] = useState<boolean>(false);
-  const dragRef = useRef<HTMLDivElement | null>(null);
+  const dragRef = useRef<T | null>(null);
 
   const handleDragIn = useCallback((e: DragEvent): void => {
     e.preventDefault();
@@ -39,13 +34,10 @@ export function useFileUpload(onFileDrop: (file: File) => void) {
       e.preventDefault();
       e.stopPropagation();
 
-      const file = e.dataTransfer?.files[0];
-      if (file) {
-        onFileDrop(file);
-      }
+      onDrop(e);
       setIsDragging(false);
     },
-    [onFileDrop],
+    [onDrop],
   );
 
   const addDragEvents = useCallback((): void => {
@@ -72,13 +64,5 @@ export function useFileUpload(onFileDrop: (file: File) => void) {
     return () => removeDragEvents();
   }, [addDragEvents, removeDragEvents]);
 
-  const FileUploader = useCallback(
-    ({ children }: PropsWithChildren) => <div ref={dragRef}>{children}</div>,
-    [],
-  );
-
-  return useMemo(
-    () => [isDragging, FileUploader] as const,
-    [isDragging, FileUploader],
-  );
+  return useMemo(() => [isDragging, dragRef] as const, [isDragging]);
 }
