@@ -8,9 +8,13 @@ export async function POST(req: NextRequest) {
   try {
     await putObject(file.name, file);
     const { protocol, host } = s3.endpoint;
+    const fileUrl = new URL(
+      file.name,
+      `${protocol}//${process.env.AWS_BUCKET_NAME}.${host}`,
+    );
 
     return NextResponse.json({
-      href: `${protocol}//${process.env.AWS_BUCKET_NAME}.${host}/${file.name}`,
+      href: fileUrl.toString(),
       message: 'File upload success',
     });
   } catch (error) {
