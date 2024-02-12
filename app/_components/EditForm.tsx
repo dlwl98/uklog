@@ -3,6 +3,7 @@
 import { ChangeEvent, useCallback, useRef, useState } from 'react';
 import stylex from '@stylexjs/stylex';
 import Content from '@/app/(root)/posts/[id]/Content';
+import { useFileUpload } from '@/app/_hooks/useFileUpload';
 
 type Props = {
   handleSubmit: (formData: FormData) => Promise<void>;
@@ -21,28 +22,41 @@ export default function EditForm({
 }: Props) {
   const [isPreview, setIsPreview] = useState(false);
   const [fileUploadCount, setFileUploadCount] = useState(0);
+  const [isFileUploading, setIsFileUploading] = useState(false);
   const contentRef = useRef(initialContent);
-  const fileRef = useRef<File | null>(null);
 
-  const upload = useCallback(async () => {
-    if (fileRef.current === null) {
-      return;
-    }
+  const upload = useCallback(async (file: File) => {
+    let additionContent = '![업로드중...]()';
+    const originContent = contentRef.current;
+    contentRef.current = originContent + additionContent;
+    setIsFileUploading(true);
+    setFileUploadCount((prev) => prev + 1);
+
     const formData = new FormData();
-    formData.append('file', fileRef.current);
+    formData.append('file', file);
+
     const res = await fetch('/api/upload', {
       method: 'POST',
       body: formData,
     });
-    const { href } = (await res.json()) as { href: unknown };
+    const { href } = (await res.json()) as { href?: string };
 
-    if (typeof href === 'string') {
-      contentRef.current += `![image alt here](${href})`;
-      setFileUploadCount((prev) => prev + 1);
+    if (href) {
+      contentRef.current = originContent + `![${file.name}](${href})`;
+    } else {
+      contentRef.current = originContent;
     }
+
+    setIsFileUploading(false);
+    setFileUploadCount((prev) => prev + 1);
   }, []);
 
-  const preview = useCallback(() => setIsPreview((prev) => !prev), []);
+  const [isDragging, FileUploader] = useFileUpload(upload);
+
+  const handleClickPreview = useCallback(
+    () => setIsPreview((prev) => !prev),
+    [],
+  );
 
   const handleContentChange = useCallback(
     (e: ChangeEvent<HTMLTextAreaElement>) =>
@@ -50,41 +64,53 @@ export default function EditForm({
     [],
   );
 
-  const handleFileChange = useCallback((e: ChangeEvent<HTMLInputElement>) => {
-    const files = e.target.files;
-    if (files) {
-      fileRef.current = files[0];
-    }
-  }, []);
+  const handleFileChange = useCallback(
+    (e: ChangeEvent<HTMLInputElement>) => {
+      const files = e.target.files;
+      if (files && files[0]) {
+        upload(files[0]);
+      }
+    },
+    [upload],
+  );
+
+  const textareaVisible = !isPreview ? 'block' : 'none';
+  const textareaBorderColor = isDragging ? 'orange' : 'none';
+  const contentTextareaStyle = styles.contentTextarea(
+    textareaVisible,
+    textareaBorderColor,
+  );
 
   return (
     <form action={handleSubmit}>
       <input type="hidden" name="id" defaultValue={id} readOnly />
 
-      <div {...stylex.props(styles.content)}>
-        <span>content</span>
-        <textarea
-          {...stylex.props(
-            styles.contentTextarea(!isPreview ? 'block' : 'none'),
-          )}
-          key={fileUploadCount}
-          name="content"
-          defaultValue={contentRef.current}
-          onChange={handleContentChange}
-        />
-        <div style={{ display: isPreview ? 'block' : 'none' }}>
-          <Content key={`${isPreview}`} source={contentRef.current} />
+      <FileUploader>
+        <div {...stylex.props(styles.content)}>
+          <span>content</span>
+          <textarea
+            {...stylex.props(contentTextareaStyle)}
+            key={fileUploadCount}
+            name="content"
+            defaultValue={contentRef.current}
+            onChange={handleContentChange}
+          />
+          <div style={{ display: isPreview ? 'block' : 'none' }}>
+            <Content key={`${isPreview}`} source={contentRef.current} />
+          </div>
         </div>
-      </div>
+      </FileUploader>
       <button type="submit">완료</button>
+
       <div {...stylex.props(styles.header)}>
         <div>
-          <input type="file" onChange={handleFileChange} />
-          <button type="button" onClick={upload}>
-            업로드
-          </button>
+          <input
+            type="file"
+            onChange={handleFileChange}
+            disabled={isFileUploading}
+          />
         </div>
-        <button onClick={preview} type="button">
+        <button onClick={handleClickPreview} type="button">
           미리보기
         </button>
         <div>
@@ -111,9 +137,12 @@ const styles = stylex.create({
   content: {
     marginTop: '100px',
   },
-  contentTextarea: (visible: string) => ({
+  contentTextarea: (visible: string, borderColor: string) => ({
     display: visible,
     width: '100%',
     minHeight: '300px',
+    borderColor,
+    borderWidth: '1px',
+    borderStyle: 'solid',
   }),
 });
