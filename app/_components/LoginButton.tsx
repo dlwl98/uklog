@@ -4,11 +4,12 @@ import stylex from '@stylexjs/stylex';
 import Link from 'next/link';
 import { usePathname, useRouter } from 'next/navigation';
 import { useCallback } from 'react';
-import useLoggedIn from '@/app/_hooks/useLoggedIn';
+import { useCookies } from 'react-cookie';
 import { button } from '@/app/global.stylex';
+import { withClient } from './withClient';
 
-export function LoginButton() {
-  const loggedIn = useLoggedIn();
+export const LoginButton = withClient(() => {
+  const [cookies] = useCookies(['loggedIn']);
   const router = useRouter();
   const pathname = usePathname();
 
@@ -18,7 +19,7 @@ export function LoginButton() {
     });
   }, [router]);
 
-  if (loggedIn) {
+  if (cookies.loggedIn) {
     return (
       <>
         <Link href={'/write'}>
@@ -38,7 +39,7 @@ export function LoginButton() {
       </button>
     </Link>
   );
-}
+});
 
 const styles = stylex.create({
   loginButton: {

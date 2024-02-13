@@ -1,14 +1,15 @@
 'use client';
 
 import { useCallback } from 'react';
+import { useCookies } from 'react-cookie';
 import Link from 'next/link';
 import { usePathname, useRouter } from 'next/navigation';
 import stylex from '@stylexjs/stylex';
 import { flex } from '@/app/global.stylex';
-import useLoggedIn from '@/app/_hooks/useLoggedIn';
+import { withClient } from '@/app/_components/withClient';
 
-export default function AdminButtons() {
-  const loggedIn = useLoggedIn();
+const AdminButtons = withClient(() => {
+  const [cookies] = useCookies(['loggedIn']);
   const pathname = usePathname();
   const router = useRouter();
 
@@ -20,8 +21,8 @@ export default function AdminButtons() {
     }
   }, [router, pathname]);
 
-  if (!loggedIn) {
-    return <></>;
+  if (!cookies.loggedIn) {
+    return null;
   }
 
   return (
@@ -34,7 +35,7 @@ export default function AdminButtons() {
       </button>
     </div>
   );
-}
+});
 
 const styles = stylex.create({
   wrapper: {
@@ -55,3 +56,5 @@ const styles = stylex.create({
     color: 'black',
   },
 });
+
+export default AdminButtons;
