@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { jwtVerify } from 'jose';
+import { COOKIE_KEY } from './constants';
 
 function isLoginRequire(pathname: string) {
   const loginRequirePathMatchers = [/\/write/, /\/posts\/[^\/]+\/edit$/];
@@ -11,23 +12,38 @@ function isLoginRequire(pathname: string) {
   return false;
 }
 
-export async function middleware(request: NextRequest) {
-  const response = NextResponse.next();
-  const token = request.cookies.get('token')?.value;
+async function authenticate(request: NextRequest) {
+  const token = request.cookies.get(COOKIE_KEY.TOKEN)?.value;
+  if (!token) {
+    return false;
+  }
 
   try {
-    if (!token) {
-      throw new Error('Token not found');
-    }
     await jwtVerify(token, new TextEncoder().encode(process.env.JWT_SECRET!));
-    return response;
-  } catch (error) {
-    response.cookies.set('loggedIn', 'false');
-    if (isLoginRequire(request.nextUrl.pathname)) {
-      return NextResponse.redirect(
-        new URL(`/login?redirect=${request.nextUrl.pathname}`, request.url),
-      );
-    }
-    return response;
+    return true;
+  } catch {
+    return false;
   }
+}
+
+function generateUnauthorizedResponse() {
+  const response = new NextResponse();
+  response.cookies.delete(COOKIE_KEY.TOKEN);
+  response.cookies.set(COOKIE_KEY.LOGGED_IN, 'false');
+  return response;
+}
+
+export async function middleware(request: NextRequest) {
+  const loggedIn = await authenticate(request);
+  if (loggedIn) {
+    return NextResponse.next();
+  }
+
+  const responseInit = generateUnauthorizedResponse();
+  if (isLoginRequire(request.nextUrl.pathname)) {
+    return NextResponse.redirect(
+      new URL(`/login?redirect=${request.nextUrl.pathname}`, request.url),
+    );
+  }
+  return NextResponse.next(responseInit);
 }

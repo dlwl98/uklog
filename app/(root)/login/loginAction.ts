@@ -1,6 +1,7 @@
 'use server';
 
 import { verifyPassword } from '@/app/_utils/crypto';
+import { COOKIE_KEY } from '@/constants';
 import { SignJWT } from 'jose';
 import { cookies } from 'next/headers';
 
@@ -22,8 +23,8 @@ export async function login(
     .setExpirationTime('72h')
     .sign(new TextEncoder().encode(process.env.JWT_SECRET!));
 
-  cookies().set('loggedIn', 'true');
-  cookies().set('token', token, {
+  cookies().set(COOKIE_KEY.LOGGED_IN, 'true');
+  cookies().set(COOKIE_KEY.TOKEN, token, {
     httpOnly: true,
     expires: Date.now() + 1000 * 60 * 60 * 24 * 3,
   });
