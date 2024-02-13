@@ -13,6 +13,7 @@ async function handleSubmit(formData: FormData) {
     await PostsService.updatePost(id!, { title, content, spoiler });
     revalidatePath('/');
     revalidatePath(`/posts/${id}`);
+    revalidatePath(`/posts/${id}/edit`);
     redirect(`/posts/${id}`);
   }
 }
@@ -34,4 +35,12 @@ export default async function Page({ params }: { params: { id: string } }) {
       handleSubmit={handleSubmit}
     />
   );
+}
+
+export async function generateStaticParams() {
+  const posts = await PostsService.getPosts();
+
+  return posts.map(({ _id }) => ({
+    id: _id.toString(),
+  }));
 }
