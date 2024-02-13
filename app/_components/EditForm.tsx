@@ -66,7 +66,8 @@ const EditForm = ({
     [upload],
   );
 
-  const [isDragging, dragRef] = useDragDrop<HTMLDivElement>(handleFileChange);
+  const [isDragging, dragRef] =
+    useDragDrop<HTMLTextAreaElement>(handleFileChange);
 
   const handleClickPreview = useCallback(
     () => setIsPreview((prev) => !prev),
@@ -90,10 +91,11 @@ const EditForm = ({
     <form action={handleSubmit}>
       <input type="hidden" name="id" defaultValue={id} readOnly />
 
-      <div {...stylex.props(styles.content)} ref={dragRef}>
+      <div {...stylex.props(styles.content)}>
         <span>content</span>
         <textarea
           {...stylex.props(contentTextareaStyle)}
+          ref={dragRef}
           key={fileUploadCount}
           name="content"
           defaultValue={contentRef.current}
