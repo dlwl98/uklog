@@ -6,7 +6,7 @@ import { usePathname, useRouter } from 'next/navigation';
 import { useCallback } from 'react';
 import { useCookies } from 'react-cookie';
 import { button } from '@/app/global.stylex';
-import { withClient } from './withClient';
+import { withClient } from '../_components/withClient';
 
 export const LoginButton = withClient(() => {
   const [cookies] = useCookies(['loggedIn']);

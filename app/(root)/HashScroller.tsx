@@ -2,12 +2,13 @@
 
 import { usePathname } from 'next/navigation';
 import { useCallback, useLayoutEffect } from 'react';
+import { withClient } from '../_components/withClient';
 
-export default function HashScroller({ offset }: { offset: number }) {
+export const HashScroller = withClient(({ offset }: { offset: number }) => {
   const pathname = usePathname();
 
   const scrollIntoView = useCallback(() => {
-    if (typeof window === 'object' && window.location.hash !== '') {
+    if (window.location.hash !== '') {
       const decodedHash = decodeURIComponent(window.location.hash.slice(1));
       const target = document.getElementById(decodedHash);
       const top = target?.getBoundingClientRect().top ?? 0;
@@ -27,4 +28,4 @@ export default function HashScroller({ offset }: { offset: number }) {
   }, [scrollIntoView]);
 
   return null;
-}
+});

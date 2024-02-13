@@ -1,12 +1,12 @@
 import '../globals.css';
 import '../uiw.css';
 import Link from 'next/link';
+import Image from 'next/image';
 import stylex from '@stylexjs/stylex';
 import { flex } from '@/app/global.stylex';
-import { LoginButton } from '@/app/_components/LoginButton';
-import ScrollTop from '@/app/_components/ScrollTop';
-import HashScroller from '@/app/_components/HashScroller';
-import Image from 'next/image';
+import { LoginButton } from './LoginButton';
+import ScrollTop from './ScrollTop';
+import { HashScroller } from './HashScroller';
 
 export default function Layout({ children }: { children: React.ReactNode }) {
   return (
