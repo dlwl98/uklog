@@ -1,4 +1,4 @@
-import connectDB from '../utils/connect-db';
+import connectDB from '../connect-db';
 import { Post } from './Post.model';
 import { CreatePostDto } from './dto/create-post.dto';
 import { UpdatePostDto } from './dto/update-post.dto';
