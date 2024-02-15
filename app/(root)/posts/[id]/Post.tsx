@@ -28,6 +28,9 @@ export default function Post({
           {title}
           <div {...stylex.props(styles.postDetail)}>{spoiler}</div>
           <div {...stylex.props(styles.postDetail)}>{createdAt}</div>
+          <div {...stylex.props(styles.postDetail)}>
+            {new Date().toLocaleString()}
+          </div>
         </h1>
         <div {...stylex.props(styles.rightItems)}>
           <AdminButtons />

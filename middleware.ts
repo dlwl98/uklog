@@ -18,7 +18,9 @@ function isLoginRequire(pathname: string) {
 
 async function authenticate(request: NextRequest) {
   const token = request.cookies.get(COOKIE_KEY.TOKEN)?.value;
-  if (!token) {
+  const loggedIn = request.cookies.get(COOKIE_KEY.LOGGED_IN)?.value;
+
+  if (!token || loggedIn !== 'true') {
     return false;
   }
 
