@@ -12,10 +12,13 @@ async function handleSubmit(formData: FormData) {
   const isPrivate = Boolean(formData.get('isPrivate'));
   if (title && content && spoiler) {
     await PostsService.updatePost(id!, { title, content, spoiler, isPrivate });
-    revalidatePath('/');
-    revalidatePath(`/posts/${id}`);
-    revalidatePath(`/posts/${id}/edit`);
-    revalidatePath(`/posts/${id}/private`);
+    const revalidate = async () => {
+      revalidatePath('/');
+      revalidatePath(`/posts/${id}`);
+      revalidatePath(`/posts/${id}/edit`);
+      revalidatePath(`/posts/${id}/private`);
+    };
+    await revalidate();
     redirect(`/posts/${id}`);
   }
 }
