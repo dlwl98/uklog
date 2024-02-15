@@ -5,7 +5,7 @@ const postSchema = new Schema(
     title: { type: String, required: true },
     content: { type: String, required: true },
     spoiler: { type: String, required: true },
-    isPrivate: { type: Boolean },
+    isPrivate: { type: Boolean, required: true },
     likes: { type: [String], default: [] },
     tags: { type: [String], defualt: [] },
   },

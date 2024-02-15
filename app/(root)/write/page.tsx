@@ -8,7 +8,7 @@ async function handleSubmit(formData: FormData) {
   const title = formData.get('title')?.toString();
   const content = formData.get('content')?.toString();
   const spoiler = formData.get('spoiler')?.toString();
-  const isPrivate = Boolean(formData.get('isPrivate')?.toString() === 'true');
+  const isPrivate = Boolean(formData.get('isPrivate'));
   if (title && content && spoiler) {
     const { _id } = await PostsService.createPost({
       title,
