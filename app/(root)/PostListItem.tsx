@@ -62,7 +62,6 @@ const styles = stylex.create({
     borderRadius: '3px',
     padding: '3px',
     margin: '2px',
-    marginTop: '3px',
   },
   postDetail: {
     fontWeight: 300,
