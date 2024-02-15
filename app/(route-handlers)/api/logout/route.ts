@@ -1,6 +1,3 @@
-import { cookies } from 'next/headers';
-
 export async function POST() {
-  cookies().delete('token');
-  return Response.json(null);
+  return Response.json(null, { headers: { 'Set-Cookie': 'token=deleted' } });
 }
