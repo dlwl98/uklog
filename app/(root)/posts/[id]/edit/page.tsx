@@ -10,8 +10,8 @@ async function handleSubmit(formData: FormData) {
   const content = formData.get('content')?.toString();
   const spoiler = formData.get('spoiler')?.toString();
   const isPrivate = Boolean(formData.get('isPrivate'));
-  if (title && content && spoiler) {
-    await PostsService.updatePost(id!, { title, content, spoiler, isPrivate });
+  if (id && title && content && spoiler) {
+    await PostsService.updatePost(id, { title, content, spoiler, isPrivate });
     const revalidate = async () => {
       revalidatePath('/');
       revalidatePath(`/posts/${id}`);
