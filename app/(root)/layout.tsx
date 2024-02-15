@@ -1,7 +1,5 @@
 import '../globals.css';
 import '../uiw.css';
-import { inject } from '@vercel/analytics';
-import { SpeedInsights } from '@vercel/speed-insights/next';
 import Link from 'next/link';
 import Image from 'next/image';
 import stylex from '@stylexjs/stylex';
@@ -9,16 +7,10 @@ import { flex } from '@/app/global.stylex';
 import { LoginButton } from './LoginButton';
 import ScrollTop from './ScrollTop';
 import { HashScroller } from './HashScroller';
-import Head from 'next/head';
-
-inject();
 
 export default function Layout({ children }: { children: React.ReactNode }) {
   return (
     <html {...stylex.props(styles.reset)} lang="ko">
-      <Head>
-        <SpeedInsights />
-      </Head>
       <body {...stylex.props(styles.reset, flex.column, styles.body)}>
         <ScrollTop />
         <HashScroller offset={80} />

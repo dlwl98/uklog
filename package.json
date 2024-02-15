@@ -13,8 +13,6 @@
     "@stylexjs/open-props": "^0.5.1",
     "@stylexjs/stylex": "^0.5.1",
     "@uiw/react-md-editor": "^4.0.3",
-    "@vercel/analytics": "^1.1.4",
-    "@vercel/speed-insights": "^1.0.10",
     "aws-sdk": "^2.1555.0",
     "jose": "^5.2.0",
     "mongoose": "^8.1.1",
