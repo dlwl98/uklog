@@ -1,16 +1,20 @@
 'use client';
 
-import MDEditor from '@uiw/react-md-editor';
+import '@uiw/react-md-editor/markdown-editor.css';
+import '@uiw/react-markdown-preview/markdown.css';
 import stylex from '@stylexjs/stylex';
 import { layout } from '@/app/global.stylex';
+import dynamic from 'next/dynamic';
 
 export default function Content({ source }: { source: string }) {
+  const Markdown = dynamic(() => import('@uiw/react-markdown-preview'));
+
   return (
     <div
       {...stylex.props(layout.default, styles.layout)}
       data-color-mode="light"
     >
-      <MDEditor.Markdown source={source} />
+      <Markdown source={source} />
     </div>
   );
 }
