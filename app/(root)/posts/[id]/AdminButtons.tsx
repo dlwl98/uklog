@@ -15,7 +15,7 @@ const AdminButtons = withClient(() => {
 
   const deletePost = useCallback(() => {
     if (confirm('삭제합니까?')) {
-      fetch(`/api/posts${id}`, { method: 'DELETE' }).then(() => {
+      fetch(`/api/posts/${id}`, { method: 'DELETE' }).then(() => {
         router.replace('/');
       });
     }
