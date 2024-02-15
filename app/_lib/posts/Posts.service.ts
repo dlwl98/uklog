@@ -17,11 +17,12 @@ export class PostsService {
   static async createPost({
     title,
     content,
+    isPrivate,
     spoiler,
     tags = [],
   }: CreatePostDto) {
     await connectDB();
-    return Post.create({ title, content, spoiler, tags });
+    return Post.create({ title, content, spoiler, isPrivate, tags });
   }
 
   static async deletePost(id: string) {
@@ -31,7 +32,7 @@ export class PostsService {
 
   static async updatePost(
     id: string,
-    { title, content, spoiler, tags }: UpdatePostDto,
+    { title, content, spoiler, isPrivate, tags }: UpdatePostDto,
   ) {
     await connectDB();
 
@@ -44,6 +45,7 @@ export class PostsService {
       title: title || oldPost.title,
       content: content || oldPost.content,
       spoiler: spoiler || oldPost.spoiler,
+      isPrivate: isPrivate,
       tags: tags || oldPost.tags,
     };
     return Post.findByIdAndUpdate(id, newPost).lean().exec();

@@ -1,16 +1,14 @@
 import { redirect } from 'next/navigation';
 import { PostsService } from '@/app/_lib/posts/Posts.service';
-import Post from './Post';
-
-export const revalidate = 30;
+import Post from '../Post';
 
 export default async function Page({ params }: { params: { id: string } }) {
   const post = await PostsService.getPostById(params.id);
   if (!post) {
     throw new Error(`cannot find post id: ${params.id}`);
   }
-  if (post.isPrivate) {
-    return redirect(`/posts/${post._id.toString()}/private`);
+  if (!post.isPrivate) {
+    return redirect(`/posts/${post._id.toString()}`);
   }
 
   const { _id, title, content, spoiler, createdAt, likes } = post;

@@ -8,8 +8,14 @@ async function handleSubmit(formData: FormData) {
   const title = formData.get('title')?.toString();
   const content = formData.get('content')?.toString();
   const spoiler = formData.get('spoiler')?.toString();
+  const isPrivate = Boolean(formData.get('isPrivate')?.toString() === 'true');
   if (title && content && spoiler) {
-    const { _id } = await PostsService.createPost({ title, content, spoiler });
+    const { _id } = await PostsService.createPost({
+      title,
+      content,
+      spoiler,
+      isPrivate,
+    });
     revalidatePath('/');
     redirect(`/posts/${_id}`);
   }
@@ -17,6 +23,12 @@ async function handleSubmit(formData: FormData) {
 
 export default async function Page() {
   return (
-    <EditForm title="" spoiler="" content="" handleSubmit={handleSubmit} />
+    <EditForm
+      title=""
+      spoiler=""
+      content=""
+      isPrivate={true}
+      handleSubmit={handleSubmit}
+    />
   );
 }

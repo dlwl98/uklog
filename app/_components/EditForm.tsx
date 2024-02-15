@@ -8,6 +8,7 @@ import useDragDrop from '@/app/_hooks/useDragDrop';
 type Props = {
   handleSubmit: (formData: FormData) => Promise<void>;
   id?: string;
+  isPrivate: boolean;
   title: string;
   spoiler: string;
   content: string;
@@ -19,6 +20,7 @@ const EditForm = ({
   title,
   spoiler,
   content: initialContent,
+  isPrivate,
 }: Props) => {
   const [isPreview, setIsPreview] = useState(false);
   const [fileUploadCount, setFileUploadCount] = useState(0);
@@ -126,6 +128,10 @@ const EditForm = ({
           <span>spoiler</span>
           <input type="text" name="spoiler" defaultValue={spoiler} />
         </div>
+        <div>
+          <span>private</span>
+          <input type="checkbox" name="isPrivate" defaultChecked={isPrivate} />
+        </div>
       </div>
     </form>
   );
@@ -136,11 +142,11 @@ const styles = stylex.create({
     position: 'fixed',
     width: '100%',
     top: '60px',
-    height: '100px',
+    height: '120px',
     backgroundColor: 'white',
   },
   content: {
-    marginTop: '100px',
+    marginTop: '120px',
   },
   contentTextarea: (visible: string, borderColor: string) => ({
     display: visible,

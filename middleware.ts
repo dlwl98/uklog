@@ -3,7 +3,11 @@ import { jwtVerify } from 'jose';
 import { COOKIE_KEY } from './constants';
 
 function isLoginRequire(pathname: string) {
-  const loginRequirePathMatchers = [/\/write/, /\/posts\/[^\/]+\/edit$/];
+  const loginRequirePathMatchers = [
+    /\/write/,
+    /\/posts\/[^\/]+\/edit$/,
+    /\/posts\/[^\/]+\/private$/,
+  ];
   for (const matcher of loginRequirePathMatchers) {
     if (pathname.match(matcher)) {
       return true;

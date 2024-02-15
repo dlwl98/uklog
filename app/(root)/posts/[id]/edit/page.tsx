@@ -9,11 +9,13 @@ async function handleSubmit(formData: FormData) {
   const title = formData.get('title')?.toString();
   const content = formData.get('content')?.toString();
   const spoiler = formData.get('spoiler')?.toString();
+  const isPrivate = Boolean(formData.get('isPrivate')?.toString());
   if (title && content && spoiler) {
-    await PostsService.updatePost(id!, { title, content, spoiler });
+    await PostsService.updatePost(id!, { title, content, spoiler, isPrivate });
     revalidatePath('/');
     revalidatePath(`/posts/${id}`);
     revalidatePath(`/posts/${id}/edit`);
+    revalidatePath(`/posts/${id}/private`);
     redirect(`/posts/${id}`);
   }
 }
@@ -24,7 +26,7 @@ export default async function Page({ params }: { params: { id: string } }) {
     throw new Error(`cannot find post id: ${params.id}`);
   }
 
-  const { title, content, spoiler } = post;
+  const { title, content, spoiler, isPrivate } = post;
 
   return (
     <EditForm
@@ -32,6 +34,7 @@ export default async function Page({ params }: { params: { id: string } }) {
       title={title}
       spoiler={spoiler}
       content={content}
+      isPrivate={isPrivate ?? false}
       handleSubmit={handleSubmit}
     />
   );
