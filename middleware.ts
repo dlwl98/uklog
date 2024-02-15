@@ -30,24 +30,19 @@ async function authenticate(request: NextRequest) {
   }
 }
 
-function generateUnauthorizedResponse() {
-  const response = new NextResponse();
-  response.cookies.delete(COOKIE_KEY.TOKEN);
-  response.cookies.set(COOKIE_KEY.LOGGED_IN, 'false');
-  return response;
-}
-
 export async function middleware(request: NextRequest) {
   const loggedIn = await authenticate(request);
   if (loggedIn) {
     return NextResponse.next();
   }
 
-  const responseInit = generateUnauthorizedResponse();
+  const response = NextResponse.next();
+  response.cookies.delete(COOKIE_KEY.TOKEN);
+  response.cookies.set(COOKIE_KEY.LOGGED_IN, 'false');
   if (isLoginRequire(request.nextUrl.pathname)) {
     return NextResponse.redirect(
       new URL(`/login?redirect=${request.nextUrl.pathname}`, request.url),
     );
   }
-  return NextResponse.next(responseInit);
+  return response;
 }
