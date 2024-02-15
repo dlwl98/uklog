@@ -3,8 +3,6 @@ import { PostsService } from '@/app/_lib/posts/Posts.service';
 import { flex, layout } from '@/app/global.stylex';
 import PostListItem from './PostListItem';
 
-export const revalidate = 30;
-
 export default async function Page() {
   const posts = await PostsService.getPosts();
 
