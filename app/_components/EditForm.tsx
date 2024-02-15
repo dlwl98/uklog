@@ -66,8 +66,7 @@ const EditForm = ({
     [upload],
   );
 
-  const [isDragging, dragRef] =
-    useDragDrop<HTMLTextAreaElement>(handleFileChange);
+  const [isDragging, dragRef] = useDragDrop<HTMLDivElement>(handleFileChange);
 
   const handleClickPreview = useCallback(
     () => setIsPreview((prev) => !prev),
@@ -93,16 +92,17 @@ const EditForm = ({
 
       <div {...stylex.props(styles.content)}>
         <span>content</span>
-        <textarea
-          {...stylex.props(contentTextareaStyle)}
-          ref={dragRef}
-          key={fileUploadCount}
-          name="content"
-          defaultValue={contentRef.current}
-          onChange={handleContentChange}
-        />
-        <div style={{ display: isPreview ? 'block' : 'none' }}>
-          <Content key={`${isPreview}`} source={contentRef.current} />
+        <div ref={dragRef}>
+          <textarea
+            {...stylex.props(contentTextareaStyle)}
+            key={fileUploadCount}
+            name="content"
+            defaultValue={contentRef.current}
+            onChange={handleContentChange}
+          />
+          <div style={{ display: isPreview ? 'block' : 'none' }}>
+            <Content key={`${isPreview}`} source={contentRef.current} />
+          </div>
         </div>
       </div>
       <button type="submit">완료</button>
