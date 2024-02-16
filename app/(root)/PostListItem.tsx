@@ -51,9 +51,8 @@ const styles = stylex.create({
   },
   title: {
     fontSize: '1.5rem',
-    lineHeight: '1.5rem',
-    height: '30px',
-    gap: '5px',
+    lineHeight: '2rem',
+    alignItems: 'flex-start',
   },
   privateTooltip: {
     backgroundColor: '#F3B95F',
@@ -61,7 +60,8 @@ const styles = stylex.create({
     lineHeight: '0.9rem',
     borderRadius: '3px',
     padding: '3px',
-    margin: '2px',
+    margin: '7px',
+    textWrap: 'nowrap',
   },
   postDetail: {
     fontWeight: 300,
