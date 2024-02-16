@@ -14,7 +14,6 @@ async function handleSubmit(formData: FormData) {
     await PostsService.updatePost(id, { title, content, spoiler, isPrivate });
     revalidatePath('/');
     revalidatePath(`/posts/${id}`);
-    revalidatePath(`/posts/${id}/edit`);
     revalidatePath(`/posts/${id}/private`);
     redirect(`/posts/${id}`);
   }
