@@ -18,7 +18,7 @@ export default function PostListItem({
   isPrivate,
 }: Props) {
   return (
-    <Link href={`/posts/${id}`}>
+    <Link href={`/posts/${id}${isPrivate ? '/private' : ''}`}>
       <div {...stylex.props(flex.column, styles.post)}>
         <h2 {...stylex.props(flex.row, styles.title)}>
           {title}

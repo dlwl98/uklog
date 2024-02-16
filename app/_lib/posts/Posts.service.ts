@@ -36,28 +36,19 @@ export class PostsService {
   ) {
     await connectDB();
 
-    const oldPost = await Post.findById(id);
-    if (!oldPost) {
-      throw new Error(`cannot find post-id: ${id}`);
-    }
-
-    const newPost = {
-      title: title || oldPost.title,
-      content: content || oldPost.content,
-      spoiler: spoiler || oldPost.spoiler,
-      isPrivate: isPrivate,
-      tags: tags || oldPost.tags,
-    };
-    return Post.findByIdAndUpdate(id, newPost).lean().exec();
+    return Post.findByIdAndUpdate(id, {
+      title,
+      content,
+      spoiler,
+      isPrivate,
+      tags,
+    })
+      .lean()
+      .exec();
   }
 
   static async createLike(postId: string, liked: string) {
     await connectDB();
-
-    const oldPost = await Post.findById(postId);
-    if (!oldPost) {
-      throw new Error(`cannot find post-id: ${postId}`);
-    }
 
     return Post.findByIdAndUpdate(
       postId,
@@ -70,11 +61,6 @@ export class PostsService {
 
   static async deleteLike(postId: string, liked: string) {
     await connectDB();
-
-    const oldPost = await Post.findById(postId);
-    if (!oldPost) {
-      throw new Error(`cannot find post-id: ${postId}`);
-    }
 
     return Post.findByIdAndUpdate(
       postId,

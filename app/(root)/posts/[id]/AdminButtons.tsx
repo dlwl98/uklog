@@ -7,9 +7,10 @@ import { useParams, useRouter } from 'next/navigation';
 import stylex from '@stylexjs/stylex';
 import { flex } from '@/app/global.stylex';
 import { withClient } from '@/app/_components/withClient';
+import { COOKIE_KEY } from '@/constants';
 
 const AdminButtons = withClient(() => {
-  const [cookies] = useCookies(['loggedIn']);
+  const [cookies] = useCookies([COOKIE_KEY.LOGGED_IN]);
   const { id } = useParams<{ id: string }>();
   const router = useRouter();
 

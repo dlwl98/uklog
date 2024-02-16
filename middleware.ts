@@ -33,18 +33,16 @@ async function authenticate(request: NextRequest) {
 }
 
 export async function middleware(request: NextRequest) {
+  if (!isLoginRequire(request.nextUrl.pathname)) {
+    return NextResponse.next();
+  }
+
   const loggedIn = await authenticate(request);
   if (loggedIn) {
     return NextResponse.next();
   }
 
-  const response = NextResponse.next();
-  response.cookies.delete(COOKIE_KEY.TOKEN);
-  response.cookies.set(COOKIE_KEY.LOGGED_IN, 'false');
-  if (isLoginRequire(request.nextUrl.pathname)) {
-    return NextResponse.redirect(
-      new URL(`/login?redirect=${request.nextUrl.pathname}`, request.url),
-    );
-  }
-  return response;
+  return NextResponse.redirect(
+    new URL(`/login?redirect=${request.nextUrl.pathname}`, request.url),
+  );
 }

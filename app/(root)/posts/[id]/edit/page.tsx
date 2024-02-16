@@ -20,6 +20,8 @@ async function handleSubmit(formData: FormData) {
   }
 }
 
+export const revalidate = 0;
+
 export default async function Page({ params }: { params: { id: string } }) {
   const post = await PostsService.getPostById(params.id);
   if (!post) {
