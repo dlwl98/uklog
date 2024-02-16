@@ -28,7 +28,10 @@ export default async function Page({ params }: { params: { id: string } }) {
       title={title}
       spoiler={spoiler}
       content={content}
-      createdAt={new Date(createdAt).toISOString().slice(0, 10)}
+      createdAt={new Date(createdAt)
+        .toISOString()
+        .slice(0, 10)
+        .replaceAll('-', '.')}
       likeCount={likes.length}
     />
   );

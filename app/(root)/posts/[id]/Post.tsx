@@ -1,8 +1,9 @@
 import stylex from '@stylexjs/stylex';
+import { flex, layout } from '@/app/global.stylex';
+import { KoreaDate } from '@/app/_utils/KoreaDate';
 import AdminButtons from './AdminButtons';
 import LikeButton from './LikeButton';
 import Content from './Content';
-import { flex, layout } from '@/app/global.stylex';
 
 type Props = {
   id: string;
@@ -26,10 +27,16 @@ export default function Post({
       <div {...stylex.props(flex.row, styles.header)}>
         <h1 {...stylex.props(flex.column, styles.title)}>
           {title}
-          <div {...stylex.props(styles.postDetail)}>{spoiler}</div>
-          <div {...stylex.props(styles.postDetail)}>{createdAt}</div>
+          <div {...stylex.props(styles.spoiler)}>{spoiler}</div>
           <div {...stylex.props(styles.postDetail)}>
-            {new Date().toLocaleString()}
+            <span {...stylex.props(styles.postDetailKey)}>작성일 </span>
+            {createdAt}
+          </div>
+          <div {...stylex.props(styles.postDetail)}>
+            <span {...stylex.props(styles.postDetailKey)}>
+              페이지가 생성된 시간{' '}
+            </span>
+            {new KoreaDate().toKRString()}
           </div>
         </h1>
         <div {...stylex.props(styles.rightItems)}>
@@ -54,10 +61,18 @@ const styles = stylex.create({
     flexGrow: 1,
     gap: '10px',
   },
+  spoiler: {
+    fontWeight: 500,
+    fontSize: '1rem',
+    color: 'gray',
+  },
   postDetail: {
-    fontWeight: 300,
+    fontWeight: 200,
     fontSize: '0.8rem',
     color: 'gray',
+  },
+  postDetailKey: {
+    fontWeight: 400,
   },
   rightItems: {
     width: '100px',
