@@ -14,28 +14,14 @@ async function handleSubmit(formData: FormData) {
     await PostsService.updatePost(id, { title, content, spoiler, isPrivate });
     revalidatePath('/');
     revalidateTag(`/posts/${id}`);
-    // revalidatePath(`/posts/${id}`);
-    // revalidatePath(`/posts/${id}/private`);
     redirect(`/posts/${id}`);
   }
 }
 
-// export const revalidate = 0;
-
-async function getPost(id: string) {
-  return unstable_cache(
-    async () => {
-      return PostsService.getPostById(id);
-    },
-    ['posts', id],
-    {
-      tags: [`/posts/${id}`],
-    },
-  )();
-}
+export const revalidate = 0;
 
 export default async function Page({ params }: { params: { id: string } }) {
-  const post = await getPost(params.id);
+  const post = await PostsService.getPostById(params.id);
   if (!post) {
     throw new Error(`cannot find post id: ${params.id}`);
   }
@@ -52,12 +38,4 @@ export default async function Page({ params }: { params: { id: string } }) {
       handleSubmit={handleSubmit}
     />
   );
-}
-
-export async function generateStaticParams() {
-  const posts = await PostsService.getPosts();
-
-  return posts.map(({ _id }) => ({
-    id: _id.toString(),
-  }));
 }
