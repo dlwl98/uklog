@@ -1,9 +1,23 @@
 import { redirect } from 'next/navigation';
 import { PostsService } from '@/app/_lib/posts/Posts.service';
 import Post from './Post';
+import { unstable_cache } from 'next/cache';
+
+async function getPost(id: string) {
+  return unstable_cache(
+    async () => {
+      return PostsService.getPostById(id);
+    },
+    ['posts', id],
+    {
+      tags: [`/posts/${id}`],
+    },
+  )();
+}
 
 export default async function Page({ params }: { params: { id: string } }) {
-  const post = await PostsService.getPostById(params.id);
+  const post = await getPost(params.id);
+
   if (!post) {
     throw new Error(`cannot find post id: ${params.id}`);
   }
