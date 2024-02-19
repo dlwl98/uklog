@@ -14,11 +14,15 @@ const AdminButtons = withClient(() => {
   const { id } = useParams<{ id: string }>();
   const router = useRouter();
 
-  const deletePost = useCallback(() => {
+  const deletePost = useCallback(async () => {
     if (confirm('삭제합니까?')) {
-      fetch(`/api/posts/${id}`, { method: 'DELETE' }).then(() => {
-        router.replace('/');
-      });
+      await fetch(`/api/posts/${id}`, { method: 'DELETE' });
+      await Promise.all([
+        fetch('/api/revalidate?path=/'),
+        fetch(`/api/revalidate?path=/posts/${id}`),
+        fetch(`/api/revalidate?path=/posts/${id}/private`),
+      ]);
+      router.replace('/');
     }
   }, [router, id]);
 
