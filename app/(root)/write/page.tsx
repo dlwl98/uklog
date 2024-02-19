@@ -2,6 +2,7 @@ import { redirect } from 'next/navigation';
 import { revalidatePath } from 'next/cache';
 import { PostsService } from '@/app/_lib/posts/Posts.service';
 import EditForm from '@/app/_components/EditForm';
+import { Metadata } from 'next';
 
 async function handleSubmit(formData: FormData) {
   'use server';
@@ -20,6 +21,10 @@ async function handleSubmit(formData: FormData) {
     redirect(`/posts/${_id}`);
   }
 }
+
+export const metadata: Metadata = {
+  title: `게시글 작성`,
+};
 
 export default async function Page() {
   return (

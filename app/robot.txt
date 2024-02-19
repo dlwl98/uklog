@@ -1,0 +1,5 @@
+User-Agent: *
+Allow: /
+Disallow: /write
+
+Sitemap: https://uklog.vercel.app/sitemap.xml

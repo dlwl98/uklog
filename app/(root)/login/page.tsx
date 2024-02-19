@@ -1,7 +1,12 @@
+import { Metadata } from 'next';
 import stylex from '@stylexjs/stylex';
+import { flex } from '@/app/global.stylex';
 import LoginForm from './LoginForm';
 import { login } from './loginAction';
-import { flex } from '@/app/global.stylex';
+
+export const metadata: Metadata = {
+  title: `로그인`,
+};
 
 export default async function Page() {
   return (

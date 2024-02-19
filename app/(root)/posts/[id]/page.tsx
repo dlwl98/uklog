@@ -1,7 +1,25 @@
+import { Metadata } from 'next';
+import { unstable_cache } from 'next/cache';
 import { redirect } from 'next/navigation';
 import { PostsService } from '@/app/_lib/posts/Posts.service';
 import Post from './Post';
-import { unstable_cache } from 'next/cache';
+
+type Props = { params: { id: string } };
+
+export async function generateMetadata({ params }: Props): Promise<Metadata> {
+  const post = await PostsService.getPostById(params.id);
+
+  if (!post) {
+    return {
+      title: '게시글을 찾을 수 없습니다',
+    };
+  }
+
+  return {
+    title: post.title,
+    description: post.spoiler,
+  };
+}
 
 async function getPost(id: string) {
   return unstable_cache(
@@ -15,7 +33,7 @@ async function getPost(id: string) {
   )();
 }
 
-export default async function Page({ params }: { params: { id: string } }) {
+export default async function Page({ params }: Props) {
   const post = await getPost(params.id);
 
   if (!post) {

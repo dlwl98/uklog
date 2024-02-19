@@ -1,5 +1,6 @@
 import '../globals.css';
 import '../uiw.css';
+import { Metadata } from 'next';
 import Link from 'next/link';
 import Image from 'next/image';
 import stylex from '@stylexjs/stylex';
@@ -8,9 +9,28 @@ import { LoginButton } from './LoginButton';
 import ScrollTop from './ScrollTop';
 import { HashScroller } from './HashScroller';
 
+export const metadata: Metadata = {
+  title: `dlwl98 • web developer`,
+  description: '프론트엔드 개발자 이진욱입니다',
+};
+
 export default function Layout({ children }: { children: React.ReactNode }) {
   return (
     <html {...stylex.props(styles.reset)} lang="ko">
+      <head>
+        <meta
+          name="viewport"
+          content="width=device-width, initial-scale=1.0, maximum-scale=1"
+        />
+        <link rel="icon" href="/favicon.ico" sizes="any" />
+        <link rel="icon" href="/icon.png" type="image/png" sizes="180x180" />
+        <link
+          rel="apple-touch-icon"
+          href="/apple-icon.png"
+          type="image/png"
+          sizes="180x180"
+        />
+      </head>
       <body {...stylex.props(styles.reset, flex.column, styles.body)}>
         <ScrollTop />
         <HashScroller offset={80} />
