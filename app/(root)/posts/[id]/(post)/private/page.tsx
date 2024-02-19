@@ -1,21 +1,9 @@
 import { PostsService } from '@/app/_lib/posts/Posts.service';
 import Post from '../Post';
-import { unstable_cache } from 'next/cache';
+import { PostPageProps } from '../layout';
 
-async function getPost(id: string) {
-  return unstable_cache(
-    async () => {
-      return PostsService.getPostById(id);
-    },
-    ['posts', id],
-    {
-      tags: [`/posts/${id}`],
-    },
-  )();
-}
-
-export default async function Page({ params }: { params: { id: string } }) {
-  const post = await getPost(params.id);
+export default async function Page({ params }: PostPageProps) {
+  const post = await PostsService.getPostById(params.id);
   if (!post) {
     throw new Error(`cannot find post id: ${params.id}`);
   }

@@ -1,4 +1,4 @@
-import { revalidatePath, revalidateTag } from 'next/cache';
+import { revalidatePath } from 'next/cache';
 import { PostsService } from '@/app/_lib/posts/Posts.service';
 import { NextRequest } from 'next/server';
 import { jwtVerify } from 'jose';
@@ -33,7 +33,8 @@ export async function DELETE(
     await jwtVerify(token, new TextEncoder().encode(process.env.JWT_SECRET!));
     const deletedPost = await PostsService.deletePost(params.id);
     revalidatePath('/');
-    revalidateTag(`/posts/${params.id}`);
+    revalidatePath(`/posts/${params.id}`);
+    revalidatePath(`/posts/${params.id}/private`);
 
     return Response.json(deletedPost);
   } catch (error) {

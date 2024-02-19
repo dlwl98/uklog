@@ -1,5 +1,5 @@
 import { redirect } from 'next/navigation';
-import { revalidatePath, revalidateTag, unstable_cache } from 'next/cache';
+import { revalidatePath } from 'next/cache';
 import EditForm from '@/app/_components/EditForm';
 import { PostsService } from '@/app/_lib/posts/Posts.service';
 import { Metadata } from 'next';
@@ -14,7 +14,8 @@ async function handleSubmit(formData: FormData) {
   if (id && title && content && spoiler) {
     await PostsService.updatePost(id, { title, content, spoiler, isPrivate });
     revalidatePath('/');
-    revalidateTag(`/posts/${id}`);
+    revalidatePath(`/posts/${id}`);
+    revalidatePath(`/posts/${id}/private`);
     redirect(`/posts/${id}`);
   }
 }

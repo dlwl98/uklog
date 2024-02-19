@@ -1,40 +1,10 @@
-import { Metadata } from 'next';
-import { unstable_cache } from 'next/cache';
 import { redirect } from 'next/navigation';
 import { PostsService } from '@/app/_lib/posts/Posts.service';
 import Post from './Post';
+import { PostPageProps } from './layout';
 
-type Props = { params: { id: string } };
-
-export async function generateMetadata({ params }: Props): Promise<Metadata> {
+export default async function Page({ params }: PostPageProps) {
   const post = await PostsService.getPostById(params.id);
-
-  if (!post) {
-    return {
-      title: '게시글을 찾을 수 없습니다',
-    };
-  }
-
-  return {
-    title: post.title,
-    description: post.spoiler,
-  };
-}
-
-async function getPost(id: string) {
-  return unstable_cache(
-    async () => {
-      return PostsService.getPostById(id);
-    },
-    ['posts', id],
-    {
-      tags: [`/posts/${id}`],
-    },
-  )();
-}
-
-export default async function Page({ params }: Props) {
-  const post = await getPost(params.id);
 
   if (!post) {
     throw new Error(`cannot find post id: ${params.id}`);
