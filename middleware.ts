@@ -44,5 +44,6 @@ export async function middleware(request: NextRequest) {
 
   return NextResponse.redirect(
     new URL(`/login?redirect=${request.nextUrl.pathname}`, request.url),
+    { headers: { 'Set-Cookie': `${COOKIE_KEY.LOGGED_IN}=false; Path=/` } },
   );
 }
