@@ -2,7 +2,7 @@
 
 import { ChangeEvent, useCallback, useRef, useState } from 'react';
 import stylex from '@stylexjs/stylex';
-import Content from '@/app/(root)/posts/[id]/Content';
+import Content from '@/app/(root)/posts/[id]/(post)/Content';
 import useDragDrop from '@/app/_hooks/useDragDrop';
 
 type Props = {

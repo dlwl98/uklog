@@ -3,6 +3,9 @@ import { PostsService } from '@/app/_lib/posts/Posts.service';
 import { flex, layout } from '@/app/(root)/global.stylex';
 import PostListItem from './PostListItem';
 
+// 24h regeneration(default), can revalidate by path or tag
+export const revalidate = 86400;
+
 export default async function Page() {
   const posts = await PostsService.getPosts();
 
