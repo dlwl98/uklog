@@ -1,5 +1,5 @@
 import stylex from '@stylexjs/stylex';
-import { flex, layout } from '@/app/global.stylex';
+import { flex, layout } from '@/app/(root)/global.stylex';
 import { KoreaDate } from '@/app/_utils/KoreaDate';
 import AdminButtons from './AdminButtons';
 import LikeButton from './LikeButton';

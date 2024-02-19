@@ -5,7 +5,7 @@ import Link from 'next/link';
 import { usePathname, useRouter } from 'next/navigation';
 import { useCallback } from 'react';
 import { useCookies } from 'react-cookie';
-import { button } from '@/app/global.stylex';
+import { button } from '@/app/(root)/global.stylex';
 import { COOKIE_KEY } from '@/constants';
 import { withClient } from '../_components/withClient';
 

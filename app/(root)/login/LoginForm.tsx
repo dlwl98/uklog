@@ -5,7 +5,7 @@ import { useFormState } from 'react-dom';
 import { useRouter, useSearchParams } from 'next/navigation';
 import stylex from '@stylexjs/stylex';
 import SubmitButton from './SubmitButton';
-import { flex } from '@/app/global.stylex';
+import { flex } from '@/app/(root)/global.stylex';
 
 export type LoginAction = (
   prevState: { message: string; success: boolean },

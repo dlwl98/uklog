@@ -1,10 +1,10 @@
-import '../globals.css';
-import '../uiw.css';
+import './globals.css';
+import './uiw.css';
 import { Metadata } from 'next';
 import Link from 'next/link';
 import Image from 'next/image';
 import stylex from '@stylexjs/stylex';
-import { flex } from '@/app/global.stylex';
+import { flex } from '@/app/(root)/global.stylex';
 import { LoginButton } from './LoginButton';
 import ScrollTop from './ScrollTop';
 import { HashScroller } from './HashScroller';

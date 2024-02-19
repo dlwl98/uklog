@@ -2,7 +2,7 @@
 
 import { useFormStatus } from 'react-dom';
 import stylex from '@stylexjs/stylex';
-import { button } from '@/app/global.stylex';
+import { button } from '@/app/(root)/global.stylex';
 
 export default function SubmitButton() {
   const { pending } = useFormStatus();

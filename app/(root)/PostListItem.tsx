@@ -1,6 +1,6 @@
 import Link from 'next/link';
 import stylex from '@stylexjs/stylex';
-import { flex } from '../global.stylex';
+import { flex } from './global.stylex';
 
 type Props = {
   id: string;

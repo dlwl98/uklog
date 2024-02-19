@@ -3,7 +3,7 @@
 import '@uiw/react-md-editor/markdown-editor.css';
 import '@uiw/react-markdown-preview/markdown.css';
 import stylex from '@stylexjs/stylex';
-import { layout } from '@/app/global.stylex';
+import { layout } from '@/app/(root)/global.stylex';
 import dynamic from 'next/dynamic';
 
 export default function Content({ source }: { source: string }) {
