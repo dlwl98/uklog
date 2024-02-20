@@ -16,11 +16,11 @@ const AdminButtons = withClient(() => {
 
   const deletePost = useCallback(async () => {
     if (confirm('삭제합니까?')) {
-      await fetch(`/api/posts/${id}`, { method: 'DELETE' });
+      await fetch(`/api/admin/posts/${id}`, { method: 'DELETE' });
       await Promise.all([
-        fetch('/api/revalidate?path=/'),
-        fetch(`/api/revalidate?path=/posts/${id}`),
-        fetch(`/api/revalidate?path=/posts/${id}/private`),
+        fetch('/api/admin/revalidate?path=/'),
+        fetch(`/api/admin/revalidate?path=/posts/${id}`),
+        fetch(`/api/admin/revalidate?path=/posts/${id}/private`),
       ]);
       router.replace('/');
     }

@@ -15,7 +15,7 @@ export const LoginButton = withClient(() => {
   const pathname = usePathname();
 
   const logout = useCallback(() => {
-    fetch('/api/logout', { method: 'POST' }).then(() => {
+    fetch('/api/admin/logout', { method: 'POST' }).then(() => {
       router.refresh();
     });
   }, [router]);
