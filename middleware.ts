@@ -1,26 +1,15 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { jwtVerify } from 'jose';
-import {
-  AUTH_REQUIRE_PATHS,
-  AUTH_REQUIRE_PATH_MAP,
-  COOKIE_KEY,
-  PATH_REGEXP_MAP,
-} from './constants';
+import { COOKIE_KEY } from './constants';
 
-function isAuthRequire(pathname: string, method: string) {
-  for (const path of AUTH_REQUIRE_PATHS) {
-    if (
-      pathname.match(PATH_REGEXP_MAP[path]) &&
-      AUTH_REQUIRE_PATH_MAP[path].method === method
-    ) {
-      return {
-        authRequire: true,
-        redirect: AUTH_REQUIRE_PATH_MAP[path].redirect,
-      };
-    }
-  }
-  return { authRequire: false, redirect: false };
-}
+export type AUTH_REQUIRE_PATH = (typeof AUTH_REQUIRE_PATHS)[number];
+export const AUTH_REQUIRE_PATHS = [
+  '/write',
+  '/posts/:id/edit',
+  '/posts/:id/private',
+  '/api/posts/:id',
+  '/api/revalidate',
+] as const;
 
 async function authenticate(request: NextRequest) {
   const token = request.cookies.get(COOKIE_KEY.TOKEN)?.value;
@@ -39,15 +28,6 @@ async function authenticate(request: NextRequest) {
 }
 
 export async function middleware(request: NextRequest) {
-  const { authRequire, redirect } = isAuthRequire(
-    request.nextUrl.pathname,
-    request.method,
-  );
-
-  if (!authRequire) {
-    return NextResponse.next();
-  }
-
   // Authentication Require
   const loggedIn = await authenticate(request);
   if (loggedIn) {
@@ -55,7 +35,7 @@ export async function middleware(request: NextRequest) {
   }
 
   // Authentication Fail
-  if (redirect) {
+  if (true) {
     return NextResponse.redirect(
       new URL(`/login?redirect=${request.nextUrl.pathname}`, request.url),
       { headers: { 'Set-Cookie': `${COOKIE_KEY.LOGGED_IN}=false; Path=/` } },
@@ -64,3 +44,44 @@ export async function middleware(request: NextRequest) {
 
   return NextResponse.error();
 }
+
+export const config = {
+  matcher: [
+    '/write',
+    '/posts/:id/edit',
+    '/posts/:id/private',
+    '/api/posts/:id',
+    {
+      source: '/api/revalidate',
+      has: [{ type: 'header', key: ':method', value: 'GET' }],
+    },
+  ],
+};
+
+export const AUTH_REQUIRE_PATH_MAP: {
+  [key in AUTH_REQUIRE_PATH]: {
+    method: string;
+    redirect: boolean;
+  };
+} = {
+  '/write': {
+    method: 'GET',
+    redirect: true,
+  },
+  '/posts/:id/edit': {
+    method: 'GET',
+    redirect: true,
+  },
+  '/posts/:id/private': {
+    method: 'GET',
+    redirect: true,
+  },
+  '/api/posts/:id': {
+    method: 'DELETE',
+    redirect: false,
+  },
+  '/api/revalidate': {
+    method: 'GET',
+    redirect: false,
+  },
+};
