@@ -28,6 +28,5 @@ export default async function Page() {
 const styles = stylex.create({
   layout: {
     gap: '10px',
-    flexDirection: 'column-reverse',
   },
 });

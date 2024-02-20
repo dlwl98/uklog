@@ -6,7 +6,7 @@ import { UpdatePostDto } from './dto/update-post.dto';
 export class PostsService {
   static async getPosts() {
     await connectDB();
-    return Post.find().lean().exec();
+    return Post.find().sort({ createdAt: -1 }).lean().exec();
   }
 
   static async getPostById(id: string) {
