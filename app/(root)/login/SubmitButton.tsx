@@ -9,18 +9,19 @@ export default function SubmitButton() {
 
   return (
     <button
-      {...stylex.props(button.default, styles.layout)}
+      {...stylex.props(button.default, styles.layout(pending ? '' : 'pointer'))}
       type="submit"
       disabled={pending}
     >
-      로그인
+      {pending ? '로그인중...' : '로그인'}
     </button>
   );
 }
 
 const styles = stylex.create({
-  layout: {
+  layout: (cursor: string) => ({
     marginTop: '20px',
     width: '100%',
-  },
+    cursor,
+  }),
 });
