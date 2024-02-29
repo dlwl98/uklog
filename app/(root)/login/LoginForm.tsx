@@ -6,6 +6,7 @@ import { useRouter, useSearchParams } from 'next/navigation';
 import stylex from '@stylexjs/stylex';
 import SubmitButton from './SubmitButton';
 import { flex } from '@/app/(root)/global.stylex';
+import useToast from '@/app/_context/ToastContext/useToast';
 
 export type LoginAction = (
   prevState: { message: string; success: boolean },
@@ -19,12 +20,14 @@ const LoginForm = ({ action }: { action: LoginAction }) => {
   });
   const router = useRouter();
   const query = useSearchParams();
+  const { toast } = useToast();
 
   useEffect(() => {
     if (state.success) {
+      toast('로그인 되었습니다');
       router.push(query.get('redirect') ?? '/');
     }
-  }, [state.success, router, query]);
+  }, [state.success, router, query, toast]);
 
   return (
     <form {...stylex.props(styles.layout)} action={formAction}>
