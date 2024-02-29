@@ -16,7 +16,7 @@ export const metadata: Metadata = {
 
 export default function Layout({ children }: { children: React.ReactNode }) {
   return (
-    <html {...stylex.props(styles.reset)} lang="ko">
+    <html {...stylex.props(styles.reset, styles.html)} lang="ko">
       <head>
         <link rel="icon" href="/favicon.ico" sizes="any" />
         <link rel="icon" href="/icon.png" type="image/png" sizes="180x180" />
@@ -69,6 +69,9 @@ const styles = stylex.create({
   reset: {
     margin: 0,
     padding: 0,
+  },
+  html: {
+    scrollBehavior: 'smooth',
   },
   body: {
     minWidth: '300px',
