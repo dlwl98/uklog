@@ -8,6 +8,7 @@ import { flex } from '@/app/(root)/global.stylex';
 import { LoginButton } from './LoginButton';
 import ScrollTop from './ScrollTop';
 import { HashScroller } from './HashScroller';
+import Toaster from '../_context/ToastContext';
 
 export const metadata: Metadata = {
   title: `dlwl98 • web developer`,
@@ -28,38 +29,40 @@ export default function Layout({ children }: { children: React.ReactNode }) {
         />
       </head>
       <body {...stylex.props(styles.reset, flex.column, styles.body)}>
-        <ScrollTop />
-        <HashScroller offset={80} />
-        <main {...stylex.props(styles.main)}>{children}</main>
-        <div {...stylex.props(flex.center, styles.footer)}>
-          <Link href="/">
-            <div {...stylex.props(flex.row, styles.copyrights)}>
-              <span>©</span>
-              <span>2024 dlwl98</span>
+        <Toaster>
+          <ScrollTop />
+          <HashScroller offset={80} />
+          <main {...stylex.props(styles.main)}>{children}</main>
+          <div {...stylex.props(flex.center, styles.footer)}>
+            <Link href="/">
+              <div {...stylex.props(flex.row, styles.copyrights)}>
+                <span>©</span>
+                <span>2024 dlwl98</span>
+              </div>
+            </Link>
+            <Link
+              {...stylex.props(flex.center)}
+              target="_blank"
+              href="https://github.com/dlwl98"
+            >
+              <Image
+                src="/images/github.svg"
+                height={20}
+                width={20}
+                alt="github"
+              />
+            </Link>
+          </div>
+          <div {...stylex.props(flex.row, styles.header)}>
+            <div {...stylex.props(flex.row, styles.headerLeftItems)}>
+              <Link href="/">Posts</Link>
+              <Link href="/about">About</Link>
             </div>
-          </Link>
-          <Link
-            {...stylex.props(flex.center)}
-            target="_blank"
-            href="https://github.com/dlwl98"
-          >
-            <Image
-              src="/images/github.svg"
-              height={20}
-              width={20}
-              alt="github"
-            />
-          </Link>
-        </div>
-        <div {...stylex.props(flex.row, styles.header)}>
-          <div {...stylex.props(flex.row, styles.headerLeftItems)}>
-            <Link href="/">Posts</Link>
-            <Link href="/about">About</Link>
+            <div {...stylex.props(flex.row, styles.headerRightItems)}>
+              <LoginButton />
+            </div>
           </div>
-          <div {...stylex.props(flex.row, styles.headerRightItems)}>
-            <LoginButton />
-          </div>
-        </div>
+        </Toaster>
       </body>
     </html>
   );
