@@ -18,7 +18,7 @@ export default async function Page() {
           title={title}
           spoiler={spoiler}
           isPrivate={isPrivate ?? false}
-          createdAt={new Date(createdAt).toISOString().slice(0, 10)}
+          createdAt={createdAt ? new Date(createdAt).toISOString().slice(0, 10) : ''}
         />
       ))}
     </div>

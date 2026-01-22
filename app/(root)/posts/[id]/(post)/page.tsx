@@ -21,10 +21,10 @@ export default async function Page({ params }: PostPageProps) {
       title={title}
       spoiler={spoiler}
       content={content}
-      createdAt={new Date(createdAt)
+      createdAt={createdAt ? new Date(createdAt)
         .toISOString()
         .slice(0, 10)
-        .replaceAll('-', '.')}
+        .replaceAll('-', '.') : ''}
       likeCount={likes.length}
     />
   );
