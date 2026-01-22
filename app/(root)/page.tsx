@@ -1,4 +1,4 @@
-import stylex from '@stylexjs/stylex';
+import * as stylex from '@stylexjs/stylex';
 import { PostsService } from '@/app/_lib/posts/Posts.service';
 import { flex, layout } from '@/app/(root)/global.stylex';
 import PostListItem from './PostListItem';

@@ -4,7 +4,7 @@ import { useCallback } from 'react';
 import { useCookies } from 'react-cookie';
 import Link from 'next/link';
 import { useParams, useRouter } from 'next/navigation';
-import stylex from '@stylexjs/stylex';
+import * as stylex from '@stylexjs/stylex';
 import { flex } from '@/app/(root)/global.stylex';
 import { withClient } from '@/app/_components/withClient';
 import { COOKIE_KEY } from '@/constants';

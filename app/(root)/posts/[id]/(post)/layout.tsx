@@ -1,12 +1,12 @@
 import { PostsService } from '@/app/_lib/posts/Posts.service';
 
-export type PostPageProps = { params: { id: string } };
+export type PostPageProps = { params: Promise<{ id: string }> };
 
-// 24h regeneration(default), can revalidate by path or tag
 export const revalidate = 86400;
 
 export async function generateMetadata({ params }: PostPageProps) {
-  const post = await PostsService.getPostById(params.id);
+  const { id } = await params;
+  const post = await PostsService.getPostById(id);
 
   if (!post) {
     return {

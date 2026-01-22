@@ -26,17 +26,22 @@ export const metadata: Metadata = {
   title: `게시글 수정`,
 };
 
-export default async function Page({ params }: { params: { id: string } }) {
-  const post = await PostsService.getPostById(params.id);
+export default async function Page({
+  params,
+}: {
+  params: Promise<{ id: string }>;
+}) {
+  const { id } = await params;
+  const post = await PostsService.getPostById(id);
   if (!post) {
-    throw new Error(`cannot find post id: ${params.id}`);
+    throw new Error(`cannot find post id: ${id}`);
   }
 
   const { title, content, spoiler, isPrivate } = post;
 
   return (
     <EditForm
-      id={params.id}
+      id={id}
       title={title}
       spoiler={spoiler}
       content={content}

@@ -1,5 +1,5 @@
 import { Metadata } from 'next';
-import stylex from '@stylexjs/stylex';
+import * as stylex from '@stylexjs/stylex';
 import { flex } from '@/app/(root)/global.stylex';
 import LoginForm from './LoginForm';
 import { login } from './loginAction';

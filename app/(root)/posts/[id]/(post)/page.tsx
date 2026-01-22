@@ -4,10 +4,11 @@ import Post from './Post';
 import { PostPageProps } from './layout';
 
 export default async function Page({ params }: PostPageProps) {
-  const post = await PostsService.getPostById(params.id);
+  const { id } = await params;
+  const post = await PostsService.getPostById(id);
 
   if (!post) {
-    throw new Error(`cannot find post id: ${params.id}`);
+    throw new Error(`cannot find post id: ${id}`);
   }
   if (post.isPrivate) {
     return redirect(`/posts/${post._id.toString()}/private`);

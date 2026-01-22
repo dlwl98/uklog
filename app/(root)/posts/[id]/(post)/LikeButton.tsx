@@ -1,7 +1,7 @@
 'use client';
 
 import { useCallback, useEffect, useState } from 'react';
-import stylex from '@stylexjs/stylex';
+import * as stylex from '@stylexjs/stylex';
 import Image from 'next/image';
 import { flex } from '@/app/(root)/global.stylex';
 

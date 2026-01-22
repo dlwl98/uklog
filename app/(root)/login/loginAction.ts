@@ -23,8 +23,9 @@ export async function login(
     .setExpirationTime('72h')
     .sign(new TextEncoder().encode(process.env.JWT_SECRET!));
 
-  cookies().set(COOKIE_KEY.LOGGED_IN, 'true');
-  cookies().set(COOKIE_KEY.TOKEN, token, {
+  const cookieStore = await cookies();
+  cookieStore.set(COOKIE_KEY.LOGGED_IN, 'true');
+  cookieStore.set(COOKIE_KEY.TOKEN, token, {
     httpOnly: true,
     expires: Date.now() + 1000 * 60 * 60 * 24 * 3,
   });

@@ -2,7 +2,7 @@
 
 import '@uiw/react-md-editor/markdown-editor.css';
 import '@uiw/react-markdown-preview/markdown.css';
-import stylex from '@stylexjs/stylex';
+import * as stylex from '@stylexjs/stylex';
 import { layout } from '@/app/(root)/global.stylex';
 import dynamic from 'next/dynamic';
 

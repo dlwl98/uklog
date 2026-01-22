@@ -3,7 +3,7 @@
 import { useEffect } from 'react';
 import { useFormState } from 'react-dom';
 import { useRouter, useSearchParams } from 'next/navigation';
-import stylex from '@stylexjs/stylex';
+import * as stylex from '@stylexjs/stylex';
 import SubmitButton from './SubmitButton';
 import { flex } from '@/app/(root)/global.stylex';
 import useToast from '@/app/_context/ToastContext/useToast';

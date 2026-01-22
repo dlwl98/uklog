@@ -1,5 +1,5 @@
 import Link from 'next/link';
-import stylex from '@stylexjs/stylex';
+import * as stylex from '@stylexjs/stylex';
 import { flex } from './global.stylex';
 
 type Props = {
