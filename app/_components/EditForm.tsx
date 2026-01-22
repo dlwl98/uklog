@@ -12,6 +12,7 @@ type Props = {
   title: string;
   spoiler: string;
   content: string;
+  createdAt?: string;
 };
 
 const EditForm = ({
@@ -21,6 +22,7 @@ const EditForm = ({
   spoiler,
   content: initialContent,
   isPrivate,
+  createdAt,
 }: Props) => {
   const [isPreview, setIsPreview] = useState(false);
   const [fileUploadCount, setFileUploadCount] = useState(0);
@@ -123,6 +125,16 @@ const EditForm = ({
           <span {...stylex.props(styles.toggleSwitch)} />
           <span {...stylex.props(styles.toggleText)}>비공개</span>
         </label>
+      </div>
+
+      <div {...stylex.props(styles.fieldGroup)}>
+        <label {...stylex.props(styles.label)}>작성 시간</label>
+        <input
+          {...stylex.props(styles.input)}
+          type="datetime-local"
+          name="createdAt"
+          defaultValue={createdAt}
+        />
       </div>
 
       <div {...stylex.props(styles.fieldGroup, styles.contentGroup)}>

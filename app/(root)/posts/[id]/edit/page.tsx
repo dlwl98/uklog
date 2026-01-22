@@ -11,8 +11,16 @@ async function handleSubmit(formData: FormData) {
   const content = formData.get('content')?.toString();
   const spoiler = formData.get('spoiler')?.toString();
   const isPrivate = Boolean(formData.get('isPrivate'));
+  const createdAtStr = formData.get('createdAt')?.toString();
+  const createdAt = createdAtStr ? new Date(createdAtStr) : undefined;
   if (id && title && content && spoiler) {
-    await PostsService.updatePost(id, { title, content, spoiler, isPrivate });
+    await PostsService.updatePost(id, {
+      title,
+      content,
+      spoiler,
+      isPrivate,
+      createdAt,
+    });
     revalidatePath('/');
     revalidatePath(`/posts/${id}`);
     revalidatePath(`/posts/${id}/private`);
@@ -32,7 +40,17 @@ export default async function Page({ params }: { params: { id: string } }) {
     throw new Error(`cannot find post id: ${params.id}`);
   }
 
-  const { title, content, spoiler, isPrivate } = post;
+  const { title, content, spoiler, isPrivate, createdAt } = post;
+
+  // datetime-local 형식: YYYY-MM-DDTHH:mm
+  const formatDateTimeLocal = (date: Date) => {
+    const pad = (n: number) => n.toString().padStart(2, '0');
+    return `${date.getFullYear()}-${pad(date.getMonth() + 1)}-${pad(date.getDate())}T${pad(date.getHours())}:${pad(date.getMinutes())}`;
+  };
+
+  const createdAtValue = createdAt
+    ? formatDateTimeLocal(new Date(createdAt))
+    : undefined;
 
   return (
     <EditForm
@@ -41,6 +59,7 @@ export default async function Page({ params }: { params: { id: string } }) {
       spoiler={spoiler}
       content={content}
       isPrivate={isPrivate ?? false}
+      createdAt={createdAtValue}
       handleSubmit={handleSubmit}
     />
   );

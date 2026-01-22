@@ -10,12 +10,15 @@ async function handleSubmit(formData: FormData) {
   const content = formData.get('content')?.toString();
   const spoiler = formData.get('spoiler')?.toString();
   const isPrivate = Boolean(formData.get('isPrivate'));
+  const createdAtStr = formData.get('createdAt')?.toString();
+  const createdAt = createdAtStr ? new Date(createdAtStr) : undefined;
   if (title && content && spoiler) {
     const { _id } = await PostsService.createPost({
       title,
       content,
       spoiler,
       isPrivate,
+      createdAt,
     });
     revalidatePath('/');
     redirect(`/posts/${_id}`);

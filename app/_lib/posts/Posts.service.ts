@@ -20,9 +20,20 @@ export class PostsService {
     isPrivate,
     spoiler,
     tags = [],
+    createdAt,
   }: CreatePostDto) {
     await connectDB();
-    return Post.create({ title, content, spoiler, isPrivate, tags });
+    const postData: Record<string, unknown> = {
+      title,
+      content,
+      spoiler,
+      isPrivate,
+      tags,
+    };
+    if (createdAt) {
+      postData.createdAt = createdAt;
+    }
+    return Post.create(postData);
   }
 
   static async deletePost(id: string) {
@@ -32,19 +43,22 @@ export class PostsService {
 
   static async updatePost(
     id: string,
-    { title, content, spoiler, isPrivate, tags }: UpdatePostDto,
+    { title, content, spoiler, isPrivate, tags, createdAt }: UpdatePostDto,
   ) {
     await connectDB();
 
-    return Post.findByIdAndUpdate(id, {
+    const updateData: Record<string, unknown> = {
       title,
       content,
       spoiler,
       isPrivate,
       tags,
-    })
-      .lean()
-      .exec();
+    };
+    if (createdAt) {
+      updateData.createdAt = createdAt;
+    }
+
+    return Post.findByIdAndUpdate(id, updateData).lean().exec();
   }
 
   static async createLike(postId: string, liked: string) {

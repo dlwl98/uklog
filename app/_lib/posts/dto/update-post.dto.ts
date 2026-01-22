@@ -4,4 +4,5 @@ export interface UpdatePostDto {
   spoiler?: string;
   isPrivate?: boolean;
   tags?: string[];
+  createdAt?: Date;
 }
