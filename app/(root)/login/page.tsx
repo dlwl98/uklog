@@ -1,3 +1,4 @@
+import { Suspense } from 'react';
 import { Metadata } from 'next';
 import * as stylex from '@stylexjs/stylex';
 import { flex } from '@/app/(root)/global.stylex';
@@ -16,7 +17,9 @@ export default async function Page() {
         <span {...stylex.props(styles.notice)}>
           관리자만 글을 작성하거나 수정할 수 있습니다
         </span>
-        <LoginForm action={login} />
+        <Suspense fallback={null}>
+          <LoginForm action={login} />
+        </Suspense>
       </div>
     </div>
   );
