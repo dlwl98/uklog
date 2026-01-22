@@ -130,6 +130,56 @@ const styles = stylex.create({
 - `flex.column`: 세로 정렬 flexbox
 - `button.default`: 기본 버튼 스타일
 
+### StyleX 제한사항
+
+StyleX는 일부 CSS 속성에 대해 엄격한 제한이 있음:
+
+| 속성 | 허용되지 않음 | 대안 |
+|------|---------------|------|
+| `flex` | `flex: 1` (숫자) | `flexGrow: 1`, `flexShrink: 0`, `flexBasis: 'auto'` 개별 사용 |
+
+```tsx
+// ❌ 잘못된 사용
+const styles = stylex.create({
+  container: {
+    flex: 1,  // Error: flex value must be one of: string literal, null, initial, inherit, unset
+  },
+});
+
+// ✅ 올바른 사용
+const styles = stylex.create({
+  container: {
+    flexGrow: 1,
+    flexShrink: 0,
+    flexBasis: 'auto',
+  },
+});
+```
+
+## PR 및 배포 프로세스
+
+### Vercel 빌드 확인 (필수)
+
+PR을 올리면 Vercel이 자동으로 빌드를 실행함. **PR 머지 전 반드시 빌드 성공 여부를 확인해야 함.**
+
+1. PR 페이지에서 Checks 섹션 확인
+2. Vercel 상태가 ✅ 인지 확인
+3. 실패 시 "Details" 링크 클릭하여 에러 로그 확인
+4. 빌드 에러 수정 후 다시 푸시
+
+```
+PR Status:
+✅ Vercel – Deployment successful  → 머지 가능
+❌ Vercel – Deployment has failed  → 에러 수정 필요
+```
+
+### 빌드 실패 시 확인 사항
+
+1. StyleX 문법 오류 (위 제한사항 참고)
+2. TypeScript 타입 에러
+3. 누락된 import/export
+4. 환경 변수 누락
+
 ## Node.js 버전
 
 - 최소 요구 버전: 24.0.0

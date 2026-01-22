@@ -264,7 +264,7 @@ const styles = stylex.create({
     color: '#6b7280',
   },
   contentGroup: {
-    flex: 1,
+    flexGrow: 1,
   },
   contentHeader: {
     display: 'flex',
