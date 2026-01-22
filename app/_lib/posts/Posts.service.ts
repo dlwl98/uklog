@@ -29,10 +29,8 @@ export class PostsService {
       spoiler,
       isPrivate,
       tags,
+      createdAt: createdAt ?? new Date(),
     };
-    if (createdAt) {
-      postData.createdAt = createdAt;
-    }
     return Post.create(postData);
   }
 
@@ -47,18 +45,20 @@ export class PostsService {
   ) {
     await connectDB();
 
-    const updateData: Record<string, unknown> = {
-      title,
-      content,
-      spoiler,
-      isPrivate,
-      tags,
-    };
+    const post = await Post.findById(id);
+    if (!post) return null;
+
+    post.title = title ?? post.title;
+    post.content = content ?? post.content;
+    post.spoiler = spoiler ?? post.spoiler;
+    post.isPrivate = isPrivate ?? post.isPrivate;
+    post.tags = tags ?? post.tags;
     if (createdAt) {
-      updateData.createdAt = createdAt;
+      post.createdAt = createdAt;
     }
 
-    return Post.findByIdAndUpdate(id, updateData).lean().exec();
+    await post.save({ timestamps: !createdAt });
+    return post.toObject();
   }
 
   static async createLike(postId: string, liked: string) {

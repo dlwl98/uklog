@@ -8,8 +8,9 @@ const postSchema = new Schema(
     isPrivate: { type: Boolean, required: true },
     likes: { type: [String], default: [] },
     tags: { type: [String], defualt: [] },
+    createdAt: { type: Date },
   },
-  { timestamps: true },
+  { timestamps: { createdAt: false, updatedAt: true } },
 );
 
 export const Post = models.Post

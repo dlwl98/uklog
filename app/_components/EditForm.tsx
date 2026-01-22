@@ -21,12 +21,13 @@ const EditForm = ({
   title,
   spoiler,
   content: initialContent,
-  isPrivate,
+  isPrivate: initialIsPrivate,
   createdAt,
 }: Props) => {
   const [isPreview, setIsPreview] = useState(false);
   const [fileUploadCount, setFileUploadCount] = useState(0);
   const [isFileUploading, setIsFileUploading] = useState(false);
+  const [isPrivateChecked, setIsPrivateChecked] = useState(initialIsPrivate);
   const fileInputRef = useRef<HTMLInputElement>(null);
   const contentRef = useRef(initialContent);
 
@@ -120,9 +121,15 @@ const EditForm = ({
             {...stylex.props(styles.checkbox)}
             type="checkbox"
             name="isPrivate"
-            defaultChecked={isPrivate}
+            checked={isPrivateChecked}
+            onChange={(e) => setIsPrivateChecked(e.target.checked)}
           />
-          <span {...stylex.props(styles.toggleSwitch)} />
+          <span
+            {...stylex.props(
+              styles.toggleSwitch,
+              isPrivateChecked && styles.toggleSwitchChecked,
+            )}
+          />
           <span {...stylex.props(styles.toggleText)}>비공개</span>
         </label>
       </div>
@@ -253,9 +260,7 @@ const styles = stylex.create({
     position: 'relative',
     width: '48px',
     height: '24px',
-    backgroundColor: {
-      default: '#e5e7eb',
-    },
+    backgroundColor: '#e5e7eb',
     borderRadius: '12px',
     transition: 'background-color 0.2s ease',
     '::before': {
@@ -269,6 +274,22 @@ const styles = stylex.create({
       borderRadius: '50%',
       transition: 'transform 0.2s ease',
       boxShadow: '0 1px 3px rgba(0,0,0,0.2)',
+    },
+  },
+  toggleSwitchChecked: {
+    backgroundColor: '#6366f1',
+    '::before': {
+      content: '""',
+      position: 'absolute',
+      top: '2px',
+      left: '2px',
+      width: '20px',
+      height: '20px',
+      backgroundColor: 'white',
+      borderRadius: '50%',
+      transition: 'transform 0.2s ease',
+      boxShadow: '0 1px 3px rgba(0,0,0,0.2)',
+      transform: 'translateX(24px)',
     },
   },
   toggleText: {
