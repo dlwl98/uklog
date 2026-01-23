@@ -1,4 +1,4 @@
-import { putObject, s3 } from '@/app/_utils/s3';
+import { uploadFile } from '@/app/_utils/supabase';
 import { NextRequest, NextResponse } from 'next/server';
 
 export async function POST(req: NextRequest) {
@@ -6,15 +6,10 @@ export async function POST(req: NextRequest) {
   const file = formData.get('file') as File;
 
   try {
-    await putObject(file.name, file);
-    const { protocol, host } = s3.endpoint;
-    const fileUrl = new URL(
-      file.name,
-      `${protocol}//${process.env.AWS_BUCKET_NAME}.${host}`,
-    );
+    const href = await uploadFile(file.name, file);
 
     return NextResponse.json({
-      href: fileUrl.toString(),
+      href,
       message: 'File upload success',
     });
   } catch (error) {
