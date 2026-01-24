@@ -99,6 +99,7 @@ const styles = stylex.create({
     backgroundColor: 'white',
     position: 'fixed',
     top: 0,
+    zIndex: 100,
   },
   headerLeftItems: {
     flexGrow: 1,
