@@ -6,9 +6,10 @@
     "node": ">=24.0.0"
   },
   "scripts": {
-    "dev": "rm -rf .next && next dev",
+    "dev": "next dev",
+    "dev:clean": "rm -rf .next && next dev",
     "preview": "rm -rf .next && next build && next start",
-    "build": "rm -rf .next && next build",
+    "build": "next build",
     "start": "next start",
     "lint": "next lint"
   },

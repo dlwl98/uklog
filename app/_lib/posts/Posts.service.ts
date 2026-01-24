@@ -1,3 +1,4 @@
+import { cache } from 'react';
 import connectDB from '../connect-db';
 import { Post } from './Post.model';
 import { CreatePostDto } from './dto/create-post.dto';
@@ -9,10 +10,10 @@ export class PostsService {
     return Post.find().sort({ createdAt: -1 }).lean().exec();
   }
 
-  static async getPostById(id: string) {
+  static getPostById = cache(async (id: string) => {
     await connectDB();
     return Post.findById(id).lean().exec();
-  }
+  });
 
   static async createPost({
     title,
