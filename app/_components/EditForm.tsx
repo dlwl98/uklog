@@ -1,6 +1,7 @@
 'use client';
 
 import { ChangeEvent, useCallback, useRef, useState } from 'react';
+import { useFormStatus } from 'react-dom';
 import stylex from '@stylexjs/stylex';
 import Content from '@/app/(root)/posts/[id]/(post)/Content';
 import useDragDrop from '@/app/_hooks/useDragDrop';
@@ -199,12 +200,24 @@ const EditForm = ({
         </div>
       </div>
 
-      <button {...stylex.props(styles.submitButton)} type="submit">
-        게시하기
-      </button>
+      <SubmitButton />
     </form>
   );
 };
+
+function SubmitButton() {
+  const { pending } = useFormStatus();
+
+  return (
+    <button
+      {...stylex.props(styles.submitButton, pending && styles.submitButtonDisabled)}
+      type="submit"
+      disabled={pending}
+    >
+      {pending ? '게시 중...' : '게시하기'}
+    </button>
+  );
+}
 
 const styles = stylex.create({
   form: {
@@ -372,6 +385,11 @@ const styles = stylex.create({
     cursor: 'pointer',
     transition: 'background-color 0.2s ease',
     alignSelf: 'flex-end',
+  },
+  submitButtonDisabled: {
+    backgroundColor: '#d1d5db',
+    cursor: 'not-allowed',
+    color: '#9ca3af',
   },
 });
 
