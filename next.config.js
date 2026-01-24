@@ -4,7 +4,7 @@ const removeImports = require('next-remove-imports')();
 
 module.exports = stylexPlugin({
   aliases: {
-    '@/*': [path.join(__dirname, '*')],
+    '@': [__dirname],
   },
   rootDir: __dirname,
 })(removeImports({}));
