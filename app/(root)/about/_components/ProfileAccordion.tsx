@@ -79,10 +79,10 @@ const styles = stylex.create({
     alignItems: 'center',
     padding: '20px 24px',
     backgroundColor: 'white',
-    borderWidth: 0,
+    borderWidth: '0px',
     borderStyle: 'none',
     cursor: 'pointer',
-    outline: 'none',
+    outlineStyle: 'none',
   },
   title: {
     fontSize: '1.1rem',
